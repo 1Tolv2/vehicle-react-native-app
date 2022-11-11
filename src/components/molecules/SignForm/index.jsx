@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableHighlight,
+  ScrollView,
+} from "react-native";
 import InputField from "../../atoms/InputField";
 import MainButton from "../../atoms/MainButton";
 import RadioButton from "../../atoms/RadioButton";
@@ -27,7 +33,7 @@ const SignForm = ({ type, setType, navigation }) => {
           setConfirmPassword("");
         }
       } catch (err) {
-        console.log(err.message);
+        console.log(err);
       }
     } else if (type === "login") {
       try {
@@ -74,80 +80,84 @@ const SignForm = ({ type, setType, navigation }) => {
 
   return (
     <View style={styles(language, type).container}>
-      <InputField
-        placeholder="Username"
-        value={username}
-        setValue={setUsername}
-      />
-      <InputField
-        placeholder="Password"
-        value={password}
-        setValue={setPassword}
-      />
+      <ScrollView>
+        <InputField
+          placeholder="Username"
+          value={username}
+          setValue={setUsername}
+        />
+        <InputField
+          placeholder="Password"
+          value={password}
+          setValue={setPassword}
+        />
 
-      {type === "register" && (
-        <>
-          <InputField
-            placeholder="Confirm password"
-            setValue={setConfirmPassword}
-          />
-          <View style={styles().languageContainer}>
-            <TouchableHighlight
-              underlayColor="white"
-              style={styles(language === "sv").imageContainer}
-              onPress={() => {
-                setLanguage("sv");
-              }}
-            >
-              <Text style={styles().image}>&#127468;&#127463;</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
-              underlayColor="white"
-              style={styles(language === "en").imageContainer}
-              onPress={() => {
-                setLanguage("en");
-              }}
-            >
-              <Text style={styles().image}>&#127480;&#127466;</Text>
-            </TouchableHighlight>
-          </View>
-          <View style={styles().radioButtons}>
-            <RadioButton
-              multiple
-              label="Metric"
-              setValue={setUnits}
-              value={units}
+        {type === "register" && (
+          <>
+            <InputField
+              placeholder="Confirm password"
+              setValue={setConfirmPassword}
             />
-            <RadioButton
-              multiple
-              label="Imperial"
-              setValue={setUnits}
-              value={units}
-            />
-          </View>
-        </>
-      )}
-      {errorMessage && <RegularText color="cancel">{errorMessage}</RegularText>}
-      <MainButton
-        title={type === "register" ? "Register" : "Log in"}
-        bgColor="orange"
-        event={handleOnPress}
-      />
-      <View style={styles.textWrapper}>
-        <RegularText align="center">
-          {type === "login"
-            ? "Don't have an account? "
-            : "Already have an account? "}
+            <View style={styles().languageContainer}>
+              <TouchableHighlight
+                underlayColor="white"
+                style={styles(language === "sv").imageContainer}
+                onPress={() => {
+                  setLanguage("sv");
+                }}
+              >
+                <Text style={styles().image}>&#127468;&#127463;</Text>
+              </TouchableHighlight>
+              <TouchableHighlight
+                underlayColor="white"
+                style={styles(language === "en").imageContainer}
+                onPress={() => {
+                  setLanguage("en");
+                }}
+              >
+                <Text style={styles().image}>&#127480;&#127466;</Text>
+              </TouchableHighlight>
+            </View>
+            <View style={styles().radioButtons}>
+              <RadioButton
+                multiple
+                label="Metric"
+                setValue={setUnits}
+                value={units}
+              />
+              <RadioButton
+                multiple
+                label="Imperial"
+                setValue={setUnits}
+                value={units}
+              />
+            </View>
+          </>
+        )}
+        {errorMessage && (
+          <RegularText color="cancel">{errorMessage}</RegularText>
+        )}
+        <MainButton
+          title={type === "register" ? "Register" : "Log in"}
+          bgColor="orange"
+          event={handleOnPress}
+        />
+        <View style={styles.textWrapper}>
+          <RegularText align="center">
+            {type === "login"
+              ? "Don't have an account? "
+              : "Already have an account? "}
 
-          <RegularText
-            fontWeight="bold"
-            align="center"
-            onPress={handleFormSwitch}
-          >
-            {type === "login" ? "Register " : "Log in"}
+            <RegularText
+              fontWeight="bold"
+              align="center"
+              onPress={handleFormSwitch}
+            >
+              {type === "login" ? "Register " : "Log in"}
+            </RegularText>
           </RegularText>
-        </RegularText>
-      </View>
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -156,7 +166,7 @@ const styles = (language, type) =>
   StyleSheet.create({
     container: {
       width: "100%",
-      height: type === "register" ? "100%" : "50%",
+      height: type === "register" ? "70%" : "50%",
       backgroundColor: colors.white,
       paddingTop: 40,
       paddingLeft: 30,
