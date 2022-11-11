@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Button, ImageBackground } from "react-native";
-import theme from "../components/theme";
+import { StyleSheet, View, ImageBackground } from "react-native";
 import SignForm from "../components/molecules/SignForm";
-
-const colors = theme.colors;
 
 export default function LoginScreen({ navigation }) {
   const [formType, setFormType] = useState("register");

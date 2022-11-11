@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
 import InputField from "../../atoms/InputField";
 import MainButton from "../../atoms/MainButton";
@@ -10,7 +10,7 @@ import theme from "../../theme";
 
 const { colors } = theme;
 
-const SignForm = ({ type, children, setType, navigation }) => {
+const SignForm = ({ type, setType, navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
