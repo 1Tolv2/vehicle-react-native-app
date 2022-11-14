@@ -7,7 +7,6 @@ const { colors } = theme;
 
 const formatDate = (date) => {
   const d = new Date(date);
-  console.log("D", d);
 
   const day = d.getDate();
   const month = d.getMonth() + 1;

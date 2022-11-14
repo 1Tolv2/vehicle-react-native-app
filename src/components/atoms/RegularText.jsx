@@ -14,7 +14,6 @@ const RegularText = ({
   fontWeight,
   onPress,
 }) => {
-  console.log(margin);
   return (
     <Text
       onPress={onPress}

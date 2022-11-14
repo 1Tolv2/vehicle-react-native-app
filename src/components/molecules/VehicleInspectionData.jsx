@@ -8,7 +8,6 @@ const { colors } = theme;
 
 const formatDate = (date) => {
   const d = new Date(date);
-  console.log("D", d);
 
   const day = d.getDate();
   const month = d.getMonth() + 1;
@@ -21,7 +20,6 @@ const VehicleInspectionData = ({ vehicle }) => {
   const lastInspection = new Date(
     vehicle?.specifications?.inspection?.lastInspection
   );
-  console.log("LAST", lastInspection);
   return (
     <View style={styles.container}>
       <Heading type="h3" color="orange">
