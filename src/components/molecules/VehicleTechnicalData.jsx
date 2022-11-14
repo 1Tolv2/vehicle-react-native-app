@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
   },
   gridItem: {
     width: "50%",
+    marginTop: 10,
   },
 });
 
