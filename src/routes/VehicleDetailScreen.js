@@ -1,7 +1,7 @@
 import React from "react";
 import { ScrollView } from "react-native";
 import VehicleIdentityArea from "../components/molecules/VehicleIdentityArea";
-import VehicleInspectionData from "../components/molecules/VehicleInspectiondata";
+import VehicleInspectionData from "../components/molecules/VehicleInspectionData";
 import VehicleNotesList from "../components/molecules/VehicleNotesList";
 import VehicleTechnicalData from "../components/molecules/VehicleTechnicalData";
 
