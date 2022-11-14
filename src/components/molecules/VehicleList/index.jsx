@@ -31,7 +31,6 @@ const VehicleList = ({ toggleModal, navigation }) => {
 
   const getVehicleData = async () => {
     const res = await getVehicles();
-    console.log(res.data);
     if (res.data.vehicles) {
       dispatch({ type: "replace", input: res.data.vehicles });
     } else if (res.data.error) {
@@ -43,7 +42,7 @@ const VehicleList = ({ toggleModal, navigation }) => {
   }, []);
   return (
     <View style={styles.container}>
-      <RegularText>Your Vehicles</RegularText>
+      <RegularText size={24}>Your Vehicles</RegularText>
       <FlatList
         data={vehicleData}
         extraData={vehicleData}
@@ -57,8 +56,8 @@ const VehicleList = ({ toggleModal, navigation }) => {
                 style={styles.image}
                 source={
                   item.vehicleType === 1
-                    ? require("../../../../assets/icons/motorcycle_filled.png")
-                    : require("../../../../assets/icons/directions_car.png")
+                    ? require("../../../../assets/icons/directions_car.png")
+                    : require("../../../../assets/icons/motorcycle_filled.png")
                 }
               />
               <View>
