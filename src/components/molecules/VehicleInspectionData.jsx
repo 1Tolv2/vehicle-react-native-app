@@ -30,11 +30,11 @@ const VehicleInspectionData = ({ vehicle }) => {
       <View style={styles.grid}>
         <View style={styles.gridItem}>
           <Heading color="darkGrey">Last approved:</Heading>
-          <RegularText margin={0}>{formatDate(lastInspection)}</RegularText>
+          <RegularText margin={5}>{formatDate(lastInspection)}</RegularText>
         </View>
         <View style={styles.gridItem}>
           <Heading color="darkGrey">Inspect before:</Heading>
-          <RegularText margin={0}>
+          <RegularText margin={5}>
             {formatDate(
               lastInspection.setMonth(lastInspection.getMonth() + 14)
             )}

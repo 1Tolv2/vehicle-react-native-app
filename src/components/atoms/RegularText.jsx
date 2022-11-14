@@ -14,6 +14,7 @@ const RegularText = ({
   fontWeight,
   onPress,
 }) => {
+  console.log(margin);
   return (
     <Text
       onPress={onPress}
@@ -21,7 +22,7 @@ const RegularText = ({
         styles({
           size: size ? size : 16,
           align: align ? align : "left",
-          margin: margin ? margin : 20,
+          margin: margin || margin === 0 ? margin : 20,
           fontStyle: fontStyle ? fontStyle : "normal",
           color: color ? colors[color] : "black",
           fontWeight: fontWeight ? fontWeight : "normal",

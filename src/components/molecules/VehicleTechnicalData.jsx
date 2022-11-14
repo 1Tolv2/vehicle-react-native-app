@@ -40,7 +40,7 @@ const loopThroughObject = (object, array, userUnits) => {
               <Heading color="darkGrey">
                 {upperCaseFirstLetter(key).replace("-", " ")}
               </Heading>
-              <RegularText>
+              <RegularText margin={5}>
                 {renderFormattedValue(key, value, userUnits) || "N/A"}
               </RegularText>
             </View>
