@@ -1,10 +1,17 @@
 import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { ScrollView } from "react-native";
+import VehicleIdentityArea from "../components/molecules/VehicleIdentityArea";
+import VehicleInspectionData from "../components/molecules/VehicleInspectiondata";
+import VehicleNotesList from "../components/molecules/VehicleNotesList";
+import VehicleTechnicalData from "../components/molecules/VehicleTechnicalData";
 
-export default function VehicleDetailScreen({ navigation }) {
+export default function VehicleDetailScreen({ route, navigation }) {
   return (
-    <View>
-      <Text>Vehicle detail Screen</Text>
-    </View>
+    <ScrollView>
+      <VehicleIdentityArea vehicle={route.params.data} />
+      <VehicleTechnicalData vehicle={route.params.data} />
+      <VehicleInspectionData vehicle={route.params.data} />
+      <VehicleNotesList vehicle={route.params.data} />
+    </ScrollView>
   );
 }
