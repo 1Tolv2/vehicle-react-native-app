@@ -1,9 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, ImageBackground } from "react-native";
 import SignForm from "../components/molecules/SignForm";
+import { getUser } from "../utils/api";
 
 export default function LoginScreen({ navigation }) {
-  const [formType, setFormType] = useState("register");
+  const [formType, setFormType] = useState("login");
+
+  useEffect(() => {
+    getUser().then((res) => {
+      if (res.data.user) {
+        navigation.navigate("Home");
+      }
+    });
+  }, []);
   return (
     <View style={styles.wrapper}>
       <ImageBackground
