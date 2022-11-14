@@ -25,6 +25,11 @@ export default function App() {
           options={{ headerShown: false }}
           component={HomeScreen}
         />
+        <Stack.Screen
+          name="Vehicle"
+          options={{ headerShown: false }}
+          component={VehicleDetailScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
