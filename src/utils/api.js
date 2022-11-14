@@ -32,20 +32,36 @@ const storeToken = async (value) => {
 };
 
 export const registerUser = async (username, password, settings) => {
-  return await axios.post("/users", { username, password, settings });
+  try {
+    return await axios.post("/users", { username, password, settings });
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 
 export const loginUser = async (username, password) => {
-  const res = await axios.post("/users/auth", { username, password });
-  storeToken(res.data.token);
-  return res;
+  try {
+    const res = await axios.post("/users/auth", { username, password });
+    storeToken(res.data.token);
+    return res;
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 
 export const getUser = async () => {
-  return await axios.get("/users/me");
+  try {
+    return await axios.get("/users/me");
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 
 export const getVehicles = async () => {
-  const jwt = await getToken();
-  return await axios.get("/vehicles");
+  try {
+    const jwt = await getToken();
+    return await axios.get("/vehicles");
+  } catch (err) {
+    console.log(err.message);
+  }
 };
