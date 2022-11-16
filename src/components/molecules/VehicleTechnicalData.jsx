@@ -74,9 +74,11 @@ const VehicleTechnicalData = ({ vehicle }) => {
     gearbox: vehicle.modelSpecification?.gearBox?.type,
   };
   useEffect(() => {
-    getUser().then((res) => {
-      setUserUnits(res.data.user.settings.units);
-    });
+    getUser()
+      .then((res) => {
+        setUserUnits(res.data.user.settings.units);
+      })
+      .catch((err) => console.log(err));
   }, [vehicle]);
   return (
     <View style={styles.container}>
