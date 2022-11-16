@@ -19,9 +19,11 @@ const VehiclePreviewModal = ({ data, stateHandler, navigate }) => {
   };
 
   useEffect(() => {
-    getUser().then((res) => {
-      setUserSettings(res.data?.user?.settings);
-    });
+    getUser()
+      .then((res) => {
+        setUserSettings(res.data?.user?.settings);
+      })
+      .catch((err) => console.log(err));
   }, []);
   return (
     <Modal
