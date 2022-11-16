@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { View } from "react-native";
+import TabMenu from "../components/molecules/TabMenu";
 import VehicleList from "../components/molecules/VehicleList";
 import VehiclePreviewModal from "../components/molecules/VehiclePreviewModal";
 
@@ -12,7 +13,7 @@ export default function HomeScreen({ navigation }) {
     setIsModalVisible(!isModalVisible);
   };
   return (
-    <View>
+    <View style={{ height: "100%" }}>
       <VehicleList toggleModal={toggleModal} navigation={navigation} />
       {isModalVisible && (
         <VehiclePreviewModal
@@ -21,6 +22,7 @@ export default function HomeScreen({ navigation }) {
           navigate={navigation.navigate}
         />
       )}
+      <TabMenu />
     </View>
   );
 }
