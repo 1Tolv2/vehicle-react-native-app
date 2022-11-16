@@ -6,8 +6,9 @@ import {
   Pressable,
   Image,
 } from "react-native";
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import RegularText from "../../atoms/RegularText";
+import { styles } from "./styles";
 import { getVehicles } from "../../../utils/api";
 import theme from "../../theme";
 const { colors } = theme;
@@ -28,6 +29,8 @@ const vehicleReducer = (state, action) => {
 
 const VehicleList = ({ toggleModal, navigation }) => {
   const [vehicleData, dispatch] = useReducer(vehicleReducer, []);
+  const [updateList, setUpdateList] = useState(false);
+  const [activeSort, setActiveSort] = useState("");
 
   const getVehicleData = async () => {
     const res = await getVehicles();
@@ -37,23 +40,62 @@ const VehicleList = ({ toggleModal, navigation }) => {
       navigation.navigate("Login");
     }
   };
+
+  const sortBy = (property) => {
+    if (activeSort === property) {
+      setActiveSort("");
+      getVehicleData();
+    } else {
+      const sortedData = vehicleData.sort((a, b) => {
+        return b[property] - a[property];
+      });
+      dispatch({
+        type: "replace",
+        input: sortedData,
+      });
+      setActiveSort(property);
+    }
+    setUpdateList(!updateList);
+  };
+
   useEffect(() => {
     getVehicleData();
   }, []);
+
   return (
-    <View style={styles.container}>
+    <View style={styles().container}>
       <RegularText size={24}>Your Vehicles</RegularText>
+      <View style={styles().filterContainer}>
+        <Pressable
+          onPress={() => sortBy("modelYear")}
+          style={styles(activeSort === "modelYear").filterItem}
+        >
+          <Image
+            style={styles().filterImage}
+            source={require("../../../../assets/icons/event_note_fill.png")}
+          />
+        </Pressable>
+        <Pressable
+          onPress={() => sortBy("vehicleType")}
+          style={styles(activeSort === "vehicleType").filterItem}
+        >
+          <Image
+            style={styles().filterImage}
+            source={require("../../../../assets/icons/transportation_fill.png")}
+          />
+        </Pressable>
+      </View>
       <FlatList
         data={vehicleData}
-        extraData={vehicleData}
+        extraData={updateList}
         renderItem={({ item }) => {
           return (
             <Pressable
-              style={styles.listItem}
+              style={styles().listItem}
               onPress={() => toggleModal(item)}
             >
               <Image
-                style={styles.image}
+                style={styles().image}
                 source={
                   item.vehicleType === 1
                     ? require("../../../../assets/icons/directions_car.png")
@@ -65,43 +107,15 @@ const VehicleList = ({ toggleModal, navigation }) => {
                   {item.nickname || item.brand + " " + item.model}
                 </RegularText>
               </View>
-              <View style={styles.arrow} />
+              <View style={styles().arrow} />
             </Pressable>
           );
         }}
         keyExtractor={(item) => item._id}
+        style={styles().list}
       />
     </View>
   );
 };
 
 export default VehicleList;
-
-const styles = StyleSheet.create({
-  container: {
-    elevation: 1,
-  },
-  listItem: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: colors.white,
-    padding: 10,
-  },
-  image: {
-    width: 75,
-    height: 50,
-  },
-  text: { minWidth: "60%" },
-  arrow: {
-    width: 15,
-    height: 15,
-    borderWidth: 2,
-    borderColor: colors.lightGrey,
-    borderBottomWidth: 0,
-    borderLeftWidth: 0,
-    transform: [{ rotate: "45deg" }],
-    margin: 10,
-  },
-});
