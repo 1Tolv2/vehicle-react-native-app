@@ -7,11 +7,15 @@ export default function LoginScreen({ navigation }) {
   const [formType, setFormType] = useState("login");
 
   useEffect(() => {
-    getUser().then((res) => {
-      if (res.data.user) {
-        navigation.navigate("Home");
-      }
-    });
+    getUser()
+      .then((res) => {
+        if (res && res.data.user) {
+          navigation.navigate("Home");
+        }
+      })
+      .catch((err) => {
+        console.log("LoginScreen:", err.message);
+      });
   }, []);
   return (
     <View style={styles.wrapper}>
