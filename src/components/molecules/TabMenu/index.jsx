@@ -4,7 +4,7 @@ import theme from "../../theme";
 
 const { colors } = theme;
 
-const TabMenu = () => {
+const TabMenu = ({ navigate }) => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
@@ -14,7 +14,10 @@ const TabMenu = () => {
             source={require("../../../../assets/icons/motorcycle_filled.png")}
           />
         </View>
-        <Pressable style={styles.centerIcon}>
+        <Pressable
+          style={styles.centerIcon}
+          onPress={() => navigate("AddVehicle")}
+        >
           <Image
             style={styles.image}
             source={require("../../../../assets/icons/add.png")}
