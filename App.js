@@ -30,6 +30,11 @@ export default function App() {
           options={{ headerShown: false }}
           component={VehicleDetailScreen}
         />
+        <Stack.Screen
+          name="AddVehicle"
+          options={{ headerShown: false }}
+          component={AddVehicleScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
