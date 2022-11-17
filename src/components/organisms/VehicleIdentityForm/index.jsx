@@ -89,7 +89,6 @@ const VehicleIdentityForm = ({
   ];
 
   const handleFormState = (value, name) => {
-    console.log(name, value);
     setFormState({
       ...formState,
       [name]: value,
