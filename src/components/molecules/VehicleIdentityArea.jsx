@@ -42,7 +42,7 @@ const VehicleIdentityArea = ({ vehicle }) => {
           }`}</Heading>
         )}
         <RegularText>
-          In traffic: {vehicle.inTrafic ? <>&#9989;</> : <>&#10060;</>}
+          In traffic: {vehicle.inTraffic ? <>&#9989;</> : <>&#10060;</>}
         </RegularText>
       </View>
     </View>

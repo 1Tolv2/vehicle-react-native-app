@@ -27,7 +27,34 @@ export default function AddVehicleScreen({ navigation }) {
   });
 
   const handleSubmitForm = () => {
-    console.log("SUBMITTING", vehicleIdentityForm, vehicleTechnicalForm);
+    // console.log("SUBMITTING", vehicleIdentityForm, vehicleTechnicalForm);
+    console.log({
+      form: {
+        registrationNumber: vehicleIdentityForm.licensePlate,
+        vehicleType: vehicleIdentityForm.vehicleType,
+        brand: vehicleIdentityForm.brand,
+        model: vehicleIdentityForm.model,
+        modelYear: vehicleIdentityForm.year,
+        color: { primaryColor: vehicleIdentityForm.color },
+        nickname: vehicleIdentityForm.nickname,
+        inspection: {
+          lastInspection: vehicleIdentityForm.lastApprovedInspection,
+          inspectionInterval: vehicleIdentityForm.inspectionInterval,
+        },
+        inTraffic: vehicleIdentityForm.inTraffic,
+        modelSpecification: {
+          engine: {
+            size: vehicleTechnicalForm.engineSize,
+            model: vehicleTechnicalForm.engineType,
+            powerKW: vehicleTechnicalForm.power,
+            powerHP: vehicleTechnicalForm.power * 1.36,
+          },
+          gearbox: {
+            type: vehicleTechnicalForm.gearbox,
+          },
+        },
+      },
+    });
   };
   return (
     <View style={{ marginTop: 20 }}>

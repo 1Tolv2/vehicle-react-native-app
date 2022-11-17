@@ -61,9 +61,9 @@ const VehicleTechnicalData = ({ vehicle }) => {
 
   const technicalData = {
     engine: {
-      size: vehicle.modelSpecification?.engine?.engineSize,
-      type: vehicle.modelSpecification?.engine?.engineModel,
-      power: vehicle.modelSpecification?.engine?.power,
+      size: vehicle.modelSpecification?.engine?.size,
+      type: vehicle.modelSpecification?.engine?.model,
+      power: vehicle.modelSpecification?.engine?.powerKW,
     },
     mileage: vehicle.mileage,
     fuel: {
