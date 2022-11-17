@@ -12,7 +12,7 @@ import RegularText from "../atoms/RegularText";
 
 const { colors } = theme;
 
-const ImageInput = ({ title, data, setValue, stateValue }) => {
+const ImageInput = ({ title, data, setValue, stateValue, name }) => {
   return (
     <View style={styles(0).container}>
       <RegularText fontWeight="bold" size={20} fullWidth>
@@ -25,7 +25,7 @@ const ImageInput = ({ title, data, setValue, stateValue }) => {
             style={
               styles(data, stateValue === item.value, item.color).itemContainer
             }
-            onPress={() => setValue(item.value)}
+            onPress={() => setValue(item.value, name)}
           >
             {item.icon && <Image style={styles(0).image} source={item.icon} />}
           </Pressable>

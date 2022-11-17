@@ -21,7 +21,7 @@ const SignForm = ({ type, setType, navigation }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [language, setLanguage] = useState("sv");
-  const [units, setUnits] = useState("Metric");
+  const [units, setUnits] = useState("metric");
   const [errorMessage, setErrorMessage] = useState(null);
 
   const submitForm = async () => {
@@ -120,12 +120,14 @@ const SignForm = ({ type, setType, navigation }) => {
             </View>
             <View style={styles().radioButtons}>
               <RadioButton
+                name="metric"
                 multiple
                 label="Metric"
                 setValue={setUnits}
                 value={units}
               />
               <RadioButton
+                name="imperial"
                 multiple
                 label="Imperial"
                 setValue={setUnits}

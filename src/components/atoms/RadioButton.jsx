@@ -5,21 +5,21 @@ import theme from "../theme";
 
 const { colors } = theme;
 
-const RadioButton = ({ label, multiple, setValue, value }) => {
+const RadioButton = ({ label, multiple, setValue, value, name }) => {
   return (
     <View style={styles().container}>
       {multiple ? (
         <Pressable
           style={styles(value === label).checkbox}
           onPress={() => {
-            setValue(label);
+            setValue(label, name);
           }}
         ></Pressable>
       ) : (
         <Pressable
           style={styles(value).checkbox}
           onPress={() => {
-            setValue(!value);
+            setValue(!value, name);
           }}
         ></Pressable>
       )}

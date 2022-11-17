@@ -10,17 +10,12 @@ import LabelText from "../../atoms/LabelText";
 
 const { colors } = theme;
 
-const VehicleIdentityForm = ({ nextForm, handleSubmitForm }) => {
-  const [chosenColor, setChosenColor] = useState(null);
-  const [nickname, setNickname] = useState("");
-  const [brand, setBrand] = useState("");
-  const [model, setModel] = useState("");
-  const [year, setYear] = useState("");
-  const [licensePlate, setLicensePlate] = useState("");
-  const [lastApprovedInspection, setLastApprovedInspection] = useState("");
-  const [inspectionInterval, setInspectionInterval] = useState("");
-  const [inTraffic, setInTraffic] = useState(false);
-
+const VehicleIdentityForm = ({
+  nextForm,
+  handleSubmitForm,
+  formState,
+  setFormState,
+}) => {
   const colorOptions = [
     {
       value: "red",
@@ -67,36 +62,39 @@ const VehicleIdentityForm = ({ nextForm, handleSubmitForm }) => {
     {
       label: "Nickname",
       placeholder: "Ex. K.I.T.T., General Lee, etc.",
-      value: nickname,
-      setValue: setNickname,
+      name: "nickname",
     },
     {
       label: "Brand *",
       placeholder: "Ex. Volvo, Toyota, SAAB, etc.",
-      value: brand,
-      setValue: setBrand,
+      name: "brand",
       required: true,
     },
     {
       label: "Model",
       placeholder: "Ex. V70, Corolla, 9000, etc.",
-      value: model,
-      setValue: setModel,
+      name: "model",
     },
     {
       label: "Year",
       placeholder: "Ex. 1998, 2001, 2003, etc.",
-      value: year,
-      setValue: setYear,
+      name: "year",
       keyboardType: "numeric",
     },
     {
       label: "License Plate",
       placeholder: "Ex. ABC-123, Ecto-1, etc.",
-      value: licensePlate,
-      setValue: setLicensePlate,
+      name: "licensePlate",
     },
   ];
+
+  const handleFormState = (value, name) => {
+    console.log(name, value);
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
 
   return (
     <ScrollView style={{ backgroundColor: "white", padding: 10 }}>
@@ -104,6 +102,7 @@ const VehicleIdentityForm = ({ nextForm, handleSubmitForm }) => {
         Vehicle identity
       </Heading>
       <ImageInput
+        name="vehicleType"
         title="Vehicle type"
         data={[
           {
@@ -118,44 +117,45 @@ const VehicleIdentityForm = ({ nextForm, handleSubmitForm }) => {
             icon: require("../../../../assets/icons/directions_car.png"),
           },
         ]}
-        setValue={setChosenColor}
-        stateValue={chosenColor}
+        setValue={handleFormState}
+        stateValue={formState.vehicleType}
       />
       {fields.map(
-        (
-          { label, placeholder, value, setValue, keyboardType, required },
-          index
-        ) => (
+        ({ label, placeholder, name, keyboardType, required }, index) => (
           <InputField
             key={index}
+            name={name}
             label={label || ""}
             placeholder={placeholder || ""}
-            value={value}
-            setValue={setValue}
+            value={formState[name]}
+            setValue={handleFormState}
             keyboardType={keyboardType || "default"}
             required={required}
           />
         )
       )}
       <ImageInput
+        name="color"
         title="Color"
-        setValue={setChosenColor}
-        stateValue={chosenColor}
+        setValue={handleFormState}
+        stateValue={formState.color}
         data={colorOptions}
       />
       <Heading type="h1" color="orange">
         Status
       </Heading>
       <RadioButton
+        name="inTraffic"
         label="In traffic?"
-        setValue={setInTraffic}
-        value={inTraffic}
+        setValue={handleFormState}
+        value={formState.inTraffic}
       />
       <InputField
+        name="lastApprovedInspection"
         label="Last approved inspection"
         placeholder="YYYY-MM-DD"
-        value={lastApprovedInspection}
-        setValue={setLastApprovedInspection}
+        value={formState.lastApprovedInspection}
+        setValue={handleFormState}
         keyboardType="numeric"
       />
       <LabelText fontWeight="bold" size={20} fullWidth margin={5}>
@@ -163,30 +163,34 @@ const VehicleIdentityForm = ({ nextForm, handleSubmitForm }) => {
       </LabelText>
       <View style={styles.radioButtons}>
         <RadioButton
+          name="inspectionInterval"
           multiple
           label="14 months"
-          setValue={setInspectionInterval}
-          value={inspectionInterval}
+          setValue={handleFormState}
+          value={formState.inspectionInterval}
         />
         <RadioButton
+          name="inspectionInterval"
           multiple
           label="24 months"
-          setValue={setInspectionInterval}
-          value={inspectionInterval}
+          setValue={handleFormState}
+          value={formState.inspectionInterval}
         />
       </View>
       <View style={styles.radioButtons}>
         <RadioButton
+          name="inspectionInterval"
           multiple
           label="36 months"
-          setValue={setInspectionInterval}
-          value={inspectionInterval}
+          setValue={handleFormState}
+          value={formState.inspectionInterval}
         />
         <RadioButton
+          name="inspectionInterval"
           multiple
           label="No inspection"
-          setValue={setInspectionInterval}
-          value={inspectionInterval}
+          setValue={handleFormState}
+          value={formState.inspectionInterval}
         />
       </View>
       <View style={{ marginVertical: 30 }}>
@@ -199,19 +203,7 @@ const VehicleIdentityForm = ({ nextForm, handleSubmitForm }) => {
         <MainButton
           title="Add more information later"
           bgColor="lightGrey"
-          event={() =>
-            handleSubmitForm({
-              nickname,
-              brand,
-              model,
-              year,
-              licensePlate,
-              color: chosenColor,
-              lastApprovedInspection,
-              inspectionInterval,
-              inTraffic,
-            })
-          }
+          event={handleSubmitForm}
           my={5}
         />
       </View>

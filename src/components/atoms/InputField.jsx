@@ -6,7 +6,14 @@ import RegularText from "./RegularText";
 
 const { colors } = theme;
 
-const InputField = ({ label, placeholder, value, setValue, keyboardType }) => {
+const InputField = ({
+  label,
+  placeholder,
+  value,
+  setValue,
+  keyboardType,
+  name,
+}) => {
   return (
     <>
       {label && (
@@ -20,15 +27,27 @@ const InputField = ({ label, placeholder, value, setValue, keyboardType }) => {
           {label}
         </LabelText>
       )}
-      <TextInput
-        style={StyledInput}
-        placeholder={placeholder}
-        value={value}
-        onChangeText={(e) => {
-          setValue(e);
-        }}
-        keyboardType={keyboardType}
-      />
+      {typeof value === "object" && value !== null ? (
+        <TextInput
+          style={StyledInput}
+          placeholder={placeholder}
+          value={value}
+          onChangeText={(e) => {
+            setValue(e);
+          }}
+          keyboardType={keyboardType}
+        />
+      ) : (
+        <TextInput
+          style={StyledInput}
+          placeholder={placeholder}
+          value={value}
+          onChangeText={(e) => {
+            setValue(e, name);
+          }}
+          keyboardType={keyboardType}
+        />
+      )}
     </>
   );
 };
