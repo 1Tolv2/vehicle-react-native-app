@@ -25,28 +25,33 @@ const styles = (color, align, size) =>
       color: colors[color],
       textAlign: align || "left",
       fontSize: size || 20,
+      width: "100%",
     },
     h1: {
       color: colors[color],
       textAlign: align || "left",
       fontSize: 35,
       fontWeight: "bold",
+      width: "100%",
     },
     h2: {
       color: colors[color],
       textAlign: align || "left",
       fontSize: 30,
+      width: "100%",
     },
     h3: {
       color: colors[color],
       textAlign: align || "left",
       fontSize: 26,
       fontWeight: "bold",
+      width: "100%",
     },
     h4: {
       color: colors[color],
       textAlign: align || "left",
       fontSize: 22,
+      width: "100%",
     },
   });
 

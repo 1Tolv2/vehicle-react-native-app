@@ -1,19 +1,35 @@
 import React from "react";
 import { Pressable, Text, StyleSheet, TextInput } from "react-native";
 import theme from "../theme/index";
+import LabelText from "./LabelText";
+import RegularText from "./RegularText";
 
 const { colors } = theme;
 
-const InputField = ({ placeholder, value, setValue }) => {
+const InputField = ({ label, placeholder, value, setValue, keyboardType }) => {
   return (
-    <TextInput
-      style={StyledInput}
-      placeholder={placeholder}
-      value={value}
-      onChangeText={(e) => {
-        setValue(e);
-      }}
-    />
+    <>
+      {label && (
+        <LabelText
+          fontWeight="bold"
+          size={18}
+          color="darkerGrey"
+          fullWidth
+          margin={5}
+        >
+          {label}
+        </LabelText>
+      )}
+      <TextInput
+        style={StyledInput}
+        placeholder={placeholder}
+        value={value}
+        onChangeText={(e) => {
+          setValue(e);
+        }}
+        keyboardType={keyboardType}
+      />
+    </>
   );
 };
 
@@ -22,7 +38,6 @@ const StyledInput = StyleSheet.create({
   paddingBottom: 8,
   paddingLeft: 15,
   paddingRight: 15,
-  marginTop: 10,
   marginBottom: 10,
   borderRadius: 5,
   borderLeftWidth: 1,

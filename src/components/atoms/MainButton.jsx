@@ -13,12 +13,20 @@ const renderColor = (bgColor, brandColor) => {
   else return null;
 };
 
-const MainButton = ({ type, title, event, bgColor, brandColor, disabled }) => {
+const MainButton = ({
+  type,
+  title,
+  event,
+  bgColor,
+  brandColor,
+  disabled,
+  my,
+}) => {
   return (
     <>
       {type === "outlined" ? (
         <Pressable
-          style={styles({ bgColor, fill: false }).container}
+          style={styles({ bgColor, fill: false, my }).container}
           onPress={event}
           type={type}
           bgColor={disabled ? "lightgrey" : renderColor(bgColor, brandColor)}
@@ -27,7 +35,7 @@ const MainButton = ({ type, title, event, bgColor, brandColor, disabled }) => {
         </Pressable>
       ) : (
         <Pressable
-          style={styles({ bgColor, fill: true }).container}
+          style={styles({ bgColor, fill: true, my }).container}
           onPress={event}
           type={type}
           bgColor={disabled ? "lightgrey" : renderColor(bgColor, brandColor)}
@@ -39,10 +47,10 @@ const MainButton = ({ type, title, event, bgColor, brandColor, disabled }) => {
   );
 };
 
-const styles = ({ bgColor, fill }) =>
+const styles = ({ bgColor, fill, my }) =>
   StyleSheet.create({
     container: {
-      marginVertical: 20,
+      marginVertical: my || 20,
       marginHorizontal: 0,
       paddingHorizontal: 5,
       paddingTop: 10,

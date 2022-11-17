@@ -13,6 +13,7 @@ const RegularText = ({
   color,
   fontWeight,
   onPress,
+  fullWidth,
 }) => {
   return (
     <Text
@@ -25,6 +26,7 @@ const RegularText = ({
           fontStyle: fontStyle ? fontStyle : "normal",
           color: color ? colors[color] : "black",
           fontWeight: fontWeight ? fontWeight : "normal",
+          fullWidth: fullWidth ? "100%" : "auto",
         }).text
       }
     >
@@ -33,9 +35,18 @@ const RegularText = ({
   );
 };
 
-const styles = ({ size, align, margin, fontStyle, color, fontWeight }) =>
+const styles = ({
+  size,
+  align,
+  margin,
+  fontStyle,
+  color,
+  fontWeight,
+  fullWidth,
+}) =>
   StyleSheet.create({
     text: {
+      width: fullWidth,
       color: color,
       textAlign: align,
       marginVertical: margin,
