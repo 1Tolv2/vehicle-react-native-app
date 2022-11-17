@@ -57,9 +57,16 @@ export const getUser = async () => {
 
 export const getVehicles = async () => {
   try {
-    const jwt = await getToken();
     return await axios.get("/vehicles");
   } catch (err) {
     console.log("getVehicles", err.message);
+  }
+};
+
+export const createVehicle = async (formData) => {
+  try {
+    return await axios.post("/vehicles", formData);
+  } catch (err) {
+    console.log("createVehicle", err.message);
   }
 };
