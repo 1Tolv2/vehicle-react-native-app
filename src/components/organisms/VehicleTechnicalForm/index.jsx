@@ -2,6 +2,10 @@ import { View, Text, ScrollView } from "react-native";
 import React from "react";
 import Heading from "../../atoms/Heading";
 import InputField from "../../atoms/InputField";
+import RegularText from "../../atoms/RegularText";
+import MainButton from "../../atoms/MainButton";
+import RadioButton from "../../atoms/RadioButton";
+import LabelText from "../../atoms/LabelText";
 
 const VehicleTechnicalForm = ({
   setFormState,
@@ -9,23 +13,22 @@ const VehicleTechnicalForm = ({
   vehicleType,
   handleSubmitForm,
 }) => {
-  // engineSize: 0,
-  // engineType: "",
-  // power: 0,
-  // mileage: 0,
-  // fuelCapacity: 0,
-  // fuelConsumption: 0,
-  // gearbox: "",
+  const [horsePower, setHorsePower] = React.useState(0);
 
   const handleFormState = (value, name) => {
     setFormState({
       ...formState,
       [name]: value,
     });
+    if (name === "power") {
+      setHorsePower(Math.floor(value * 1.35962));
+    }
   };
 
   return (
-    <ScrollView style={{ backgroundColor: "white", padding: 10 }}>
+    <ScrollView
+      style={{ backgroundColor: "white", padding: 10, width: "100%" }}
+    >
       <Heading type="h1" color="orange">
         Technical Details
       </Heading>
@@ -33,11 +36,86 @@ const VehicleTechnicalForm = ({
       <InputField
         name="engineSize"
         label="Size"
-        placeholder="Ex. 1.2 liter, 600cc"
+        placeholder={
+          vehicleType === 1 ? "Ex. 1.6, 2.3, etc." : "Ex. 125, 600, 1300, etc."
+        }
         value={formState.engineSize}
         setValue={handleFormState}
         keyboardType="numeric"
         unit={vehicleType === 1 ? "liter" : "cc"}
+      />
+      <InputField
+        name="engineType"
+        label="Type"
+        placeholder="Ex. B202, V8, Inline-4, etc."
+        value={formState.engineType}
+        setValue={handleFormState}
+        keyboardType="default"
+      />
+      <InputField
+        name="power"
+        label="Power"
+        placeholder="Ex. 81, 35, etc."
+        value={formState.power}
+        setValue={handleFormState}
+        keyboardType="numeric"
+        unit="kW"
+      />
+      <RegularText>Horsepower: {horsePower}</RegularText>
+      <InputField
+        name="mileage"
+        label="Mileage"
+        placeholder="Ex. 2400, 16000, 26000, etc."
+        value={formState.mileage}
+        setValue={handleFormState}
+        keyboardType="numeric"
+        unit="mil"
+      />
+      <InputField
+        name="fuelCapacity"
+        label="Fuel Capacity"
+        placeholder="Ex. 18, 35, etc."
+        value={formState.fuelCapacity}
+        setValue={handleFormState}
+        keyboardType="numeric"
+        unit="liter"
+      />
+      <InputField
+        name="fuelConsumption"
+        label="Fuel Consumption"
+        placeholder="Ex. 0.3, 0.6, 1 etc."
+        value={formState.fuelConsumption}
+        setValue={handleFormState}
+        keyboardType="numeric"
+        unit="l/mil"
+      />
+      <LabelText fontWeight="bold" size={20} fullWidth margin={5}>
+        Gearbox
+      </LabelText>
+      <View
+        style={{
+          flexDirection: "row",
+        }}
+      >
+        <RadioButton
+          multiple
+          name="gearbox"
+          label="Manual"
+          setValue={handleFormState}
+          value={formState.gearbox}
+        />
+        <RadioButton
+          multiple
+          name="gearbox"
+          label="Automatic"
+          setValue={handleFormState}
+          value={formState.gearbox}
+        />
+      </View>
+      <MainButton
+        title="Add vehicle"
+        bgColor="orange"
+        event={handleSubmitForm}
       />
     </ScrollView>
   );

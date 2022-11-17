@@ -42,6 +42,7 @@ export default function AddVehicleScreen({ navigation }) {
       )}
       {formPart === 2 && (
         <VehicleTechnicalForm
+          vehicleType={vehicleIdentityForm.vehicleType}
           formState={vehicleTechnicalForm}
           setFormState={setVehicleTechnicalForm}
           handleSubmitForm={handleSubmitForm}
