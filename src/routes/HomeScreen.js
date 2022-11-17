@@ -22,7 +22,7 @@ export default function HomeScreen({ navigation }) {
           navigate={navigation.navigate}
         />
       )}
-      <TabMenu />
+      <TabMenu navigate={navigation.navigate} />
     </View>
   );
 }
