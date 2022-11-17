@@ -105,13 +105,13 @@ const VehicleIdentityForm = ({
         title="Vehicle type"
         data={[
           {
-            value: 1,
+            value: 2,
             color: "transparent",
 
             icon: require("../../../../assets/icons/motorcycle_filled.png"),
           },
           {
-            value: 2,
+            value: 1,
             color: "transparent",
             icon: require("../../../../assets/icons/directions_car.png"),
           },
