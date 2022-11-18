@@ -25,6 +25,17 @@ const VehiclePreviewModal = ({ data, stateHandler, navigate }) => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  const formatDate = (date) => {
+    const d = new Date(date);
+
+    const day = d.getDate();
+    const month = d.getMonth() + 1;
+    const year = d.getFullYear();
+    return `${year}-${month < 10 ? "0" + month : month}-${
+      day < 10 ? "0" + day : day
+    }`;
+  };
   return (
     <Modal
       animationType="slide"
@@ -59,12 +70,30 @@ const VehiclePreviewModal = ({ data, stateHandler, navigate }) => {
                 }`}
                 icon="mileage"
               />
+              {data && (
+                <IconWithText
+                  isMiddle
+                  text={`${
+                    formatDate(
+                      new Date(
+                        data.specifications?.inspection?.lastInspection
+                      )?.setMonth(
+                        new Date(
+                          data.specifications?.inspection?.lastInspection
+                        )?.getMonth() +
+                          data.specifications?.inspection?.inspectionInterval
+                      )
+                    ) || "N/A"
+                  }`}
+                  icon="nextInspection"
+                />
+              )}
               <IconWithText
-                isMiddle
-                text={`${data.nextInspection || "N/A"}`}
-                icon="nextInspection"
+                text={`${
+                  data?.modelSpecification?.engine?.powerKW || "N/A"
+                } kw`}
+                icon="power"
               />
-              <IconWithText text={`${data.power || "N/A"} kw`} icon="power" />
             </View>
             <MainButton
               title="Go to vehicle"
