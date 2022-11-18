@@ -23,12 +23,15 @@ const TabMenu = ({ navigate }) => {
             source={require("../../../../assets/icons/add.png")}
           />
         </Pressable>
-        <View style={styles.iconContainer}>
+        <Pressable
+          style={styles.iconContainer}
+          onPress={() => navigate("AppSettings")}
+        >
           <Image
             style={styles.image}
             source={require("../../../../assets/icons/settings_filled.png")}
           />
-        </View>
+        </Pressable>
       </View>
     </View>
   );
