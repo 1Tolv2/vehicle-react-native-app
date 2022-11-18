@@ -1,8 +1,9 @@
 import React from "react";
-import { Pressable, View, Text, StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet, TextInput } from "react-native";
 import theme from "../theme/index";
 import LabelText from "./LabelText";
 import RegularText from "./RegularText";
+import ErrorText from "./ErrorText";
 
 const { colors } = theme;
 
@@ -14,6 +15,7 @@ const InputField = ({
   keyboardType,
   name,
   unit,
+  required,
 }) => {
   return (
     <>
@@ -26,6 +28,7 @@ const InputField = ({
           margin={5}
         >
           {label}
+          {required && <ErrorText>*</ErrorText>}
         </LabelText>
       )}
       <View style={styles.container}>
