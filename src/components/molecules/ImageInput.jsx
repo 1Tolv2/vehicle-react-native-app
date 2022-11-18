@@ -9,14 +9,16 @@ import {
 import React from "react";
 import theme from "../theme";
 import RegularText from "../atoms/RegularText";
+import ErrorText from "../atoms/ErrorText";
 
 const { colors } = theme;
 
-const ImageInput = ({ title, data, setValue, stateValue, name }) => {
+const ImageInput = ({ title, data, setValue, stateValue, name, required }) => {
   return (
     <View style={styles(0).container}>
       <RegularText fontWeight="bold" size={20} fullWidth>
         {title}
+        {required && <ErrorText>*</ErrorText>}
       </RegularText>
       {data.map((item, index) => {
         return (
