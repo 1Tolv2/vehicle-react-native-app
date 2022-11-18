@@ -7,6 +7,7 @@ import InputField from "../../atoms/InputField";
 import MainButton from "../../atoms/MainButton";
 import RadioButton from "../../atoms/RadioButton";
 import LabelText from "../../atoms/LabelText";
+import ErrorText from "../../atoms/ErrorText";
 
 const { colors } = theme;
 
@@ -16,6 +17,7 @@ const VehicleIdentityForm = ({
   formState,
   setFormState,
 }) => {
+  const [errorMessage, setErrorMessage] = useState("");
   const colorOptions = [
     {
       value: "red",
@@ -65,7 +67,7 @@ const VehicleIdentityForm = ({
       name: "nickname",
     },
     {
-      label: "Brand *",
+      label: "Brand",
       placeholder: "Ex. Volvo, Toyota, SAAB, etc.",
       name: "brand",
       required: true,
@@ -118,6 +120,7 @@ const VehicleIdentityForm = ({
         ]}
         setValue={handleFormState}
         stateValue={formState.vehicleType}
+        required
       />
       {fields.map(
         ({ label, placeholder, name, keyboardType, required }, index) => (
@@ -193,10 +196,18 @@ const VehicleIdentityForm = ({
         />
       </View>
       <View style={{ marginVertical: 30 }}>
+        {errorMessage.length > 0 && <ErrorText>{errorMessage}</ErrorText>}
         <MainButton
           title="Add technical specifications"
           bgColor="orange"
-          event={nextForm}
+          event={() => {
+            if (formState.vehicleType && formState.brand) {
+              nextForm();
+            } else {
+              setErrorMessage("Please fill in all required fields");
+              console.log(ErrorMessage);
+            }
+          }}
           my={5}
         />
         <MainButton
