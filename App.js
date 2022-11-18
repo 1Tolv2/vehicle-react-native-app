@@ -8,6 +8,7 @@ import RegisterScreen from "./src/routes/RegisterScreen";
 import AddVehicleScreen from "./src/routes/AddVehicleScreen";
 import VehicleDetailScreen from "./src/routes/VehicleDetailScreen";
 import HomeScreen from "./src/routes/HomeScreen";
+import AppSettingsScreen from "./src/routes/AppSettingsScreen";
 
 const Stack = createStackNavigator();
 
@@ -34,6 +35,11 @@ export default function App() {
           name="AddVehicle"
           options={{ headerShown: false }}
           component={AddVehicleScreen}
+        />
+        <Stack.Screen
+          name="AppSettings"
+          options={{ headerShown: false }}
+          component={AppSettingsScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
