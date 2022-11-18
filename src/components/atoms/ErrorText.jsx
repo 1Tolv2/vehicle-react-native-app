@@ -1,10 +1,12 @@
-import React from 'react'
-import RegularText from './RegularText'
+import React from "react";
+import RegularText from "./RegularText";
 
-const ErrorText = ({children}) => {
+const ErrorText = ({ children }) => {
   return (
-    <RegularText color="red" margin="0px 0px 0px 5px">{children}</RegularText>
-  )
-}
+    <RegularText color="cancel" margin="0px 0px 0px 5px">
+      {children}
+    </RegularText>
+  );
+};
 
-export default ErrorText
+export default ErrorText;
