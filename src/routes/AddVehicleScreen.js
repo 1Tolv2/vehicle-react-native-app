@@ -7,6 +7,7 @@ import VehicleTechnicalForm from "../components/organisms/VehicleTechnicalForm";
 export default function AddVehicleScreen({ navigation }) {
   const [formPart, setFormPart] = useState(1);
   const [vehicleIdentityForm, setVehicleIdentityForm] = useState({
+    vehicleType: 0,
     color: "",
     nickname: "",
     brand: "",
@@ -28,6 +29,8 @@ export default function AddVehicleScreen({ navigation }) {
   });
 
   const handleSubmitForm = () => {
+    if (vehicleIdentityForm.vehicleType || vehicleIdentityForm.brand) {
+    }
     const formData = {
       registrationNumber: vehicleIdentityForm.licensePlate,
       vehicleType: vehicleIdentityForm.vehicleType,
