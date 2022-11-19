@@ -3,6 +3,7 @@ import React, { useEffect, useReducer, useState } from "react";
 import { getVehicles } from "../../../utils/api";
 import RegularText from "../../atoms/RegularText";
 import { styles } from "./styles";
+import Heading from "../../atoms/Heading";
 
 const vehicleReducer = (state, action) => {
   if (!action.input) {
@@ -55,9 +56,9 @@ const VehicleList = ({ toggleModal, navigation, isFocused, userSettings }) => {
 
   return (
     <View style={styles().container}>
-      <RegularText size={24}>
+      <Heading type="h1" color="orange">
         {userSettings?.language === "sv" ? "Dina fordon" : "Your Vehicles"}
-      </RegularText>
+      </Heading>
       <View style={styles().filterContainer}>
         <Pressable
           onPress={() => sortBy("modelYear")}

@@ -4,6 +4,8 @@ import LabelText from "../components/atoms/LabelText";
 import MainButton from "../components/atoms/MainButton";
 import { getUser, updateUser } from "../utils/api";
 import RadioButton from "../components/atoms/RadioButton";
+import RegularText from "../components/atoms/RegularText";
+import Heading from "../components/atoms/Heading";
 
 export default function AppSettingsScreen({ navigation }) {
   const [currentLanguage, setCurrentLanguage] = useState("");
@@ -62,9 +64,13 @@ export default function AppSettingsScreen({ navigation }) {
         backgroundColor: "white",
       }}
     >
-      <Text>App Settings Screen</Text>
       {userSettings && (
         <>
+          <Heading type="h1" color="orange">
+            {userSettings?.language === "sv"
+              ? "Applikations inställningar"
+              : "Application Settings"}
+          </Heading>
           <LabelText>
             {currentLanguage === "sv" ? "Enheter" : "Units"}
           </LabelText>
@@ -98,6 +104,7 @@ export default function AppSettingsScreen({ navigation }) {
           <LabelText>
             {currentLanguage === "sv" ? "Språk" : "Language"}
           </LabelText>
+
           <View style={{ flexDirection: "row" }}>
             <RadioButton
               multiple
@@ -116,6 +123,11 @@ export default function AppSettingsScreen({ navigation }) {
           </View>
         </>
       )}
+      <RegularText size={14} fontStyle="italic" margin={10}>
+        {currentLanguage === "sv"
+          ? "Efter att du har updaterat inställningarna så behöver du starta om applikationen för att ändringarna ska ta full effekt."
+          : "After updating the settings you will need to restart the application for the settings to take full effect."}
+      </RegularText>
       <MainButton title="Save" event={handleSubmitSettings} bgColor="orange" />
     </View>
   );
