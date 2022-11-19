@@ -1,17 +1,8 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  Pressable,
-  Image,
-} from "react-native";
+import { View, FlatList, Pressable, Image } from "react-native";
 import React, { useEffect, useReducer, useState } from "react";
+import { getVehicles } from "../../../utils/api";
 import RegularText from "../../atoms/RegularText";
 import { styles } from "./styles";
-import { getVehicles } from "../../../utils/api";
-import theme from "../../theme";
-const { colors } = theme;
 
 const vehicleReducer = (state, action) => {
   if (!action.input) {

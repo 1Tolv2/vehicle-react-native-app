@@ -1,5 +1,5 @@
 import { View, TextInput, Modal, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import theme from "../theme";
 import Heading from "../atoms/Heading";
 import MainButton from "../atoms/MainButton";
@@ -14,7 +14,6 @@ const NoteModal = ({
   deleteNote,
 }) => {
   const { note, setNote } = noteState;
-  console.log("NOTE", note);
 
   return (
     <Modal
