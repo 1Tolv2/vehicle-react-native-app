@@ -52,6 +52,7 @@ const VehicleList = ({ toggleModal, navigation, isFocused, userSettings }) => {
 
   useEffect(() => {
     getVehicleData();
+    // setUpdateList(!updateList);
   }, [isFocused]);
 
   return (

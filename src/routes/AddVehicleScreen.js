@@ -31,7 +31,43 @@ export default function AddVehicleScreen({ navigation, route }) {
 
   useEffect(() => {
     if (route.params?.data) {
-      setVehicleIdentityForm(route.params.data);
+      const {
+        nickname,
+        color,
+        vehicleType,
+        brand,
+        model,
+        inTraffic,
+        specifications,
+        registrationNumber,
+        modelYear,
+        modelSpecification,
+        mileage,
+      } = route.params.data;
+
+      setVehicleIdentityForm({
+        vehicleType,
+        color: color.primaryColor,
+        nickname,
+        brand,
+        model,
+        year: modelYear?.toString(),
+        licensePlate: registrationNumber,
+        lastApprovedInspection: specifications.inspection.lastInspection,
+        inspectionInterval:
+          specifications.inspection.inspectionInterval?.toString() + " months",
+        inTraffic,
+      });
+      setVehicleTechnicalForm({
+        engineSize: modelSpecification.engine?.size?.toString(),
+        engineType: modelSpecification.engine?.model,
+        power: modelSpecification.engine?.powerKW?.toString(),
+        mileage: mileage?.toString(),
+        fuelCapacity: modelSpecification?.engine?.fuelCapacity?.toString(),
+        fuelConsumption:
+          modelSpecification?.engine?.fuelConsumption?.toString(),
+        gearbox: modelSpecification?.gearbox,
+      });
     }
   }, []);
 
@@ -39,7 +75,6 @@ export default function AddVehicleScreen({ navigation, route }) {
     getUser()
       .then((res) => {
         if (res.data) {
-          console.log(res.data.user?.settings);
           setUserSettings(res.data.user?.settings);
         }
       })
@@ -52,20 +87,26 @@ export default function AddVehicleScreen({ navigation, route }) {
       vehicleType: vehicleIdentityForm.vehicleType,
       brand: vehicleIdentityForm.brand,
       model: vehicleIdentityForm.model,
-      modelYear: vehicleIdentityForm.year,
-      color: vehicleIdentityForm.color,
+      modelYear: parseInt(vehicleIdentityForm.year),
+      color: { primaryColor: vehicleIdentityForm.color },
       nickname: vehicleIdentityForm.nickname,
-      inspection: {
-        lastInspection: vehicleIdentityForm.lastApprovedInspection,
-        inspectionInterval: vehicleIdentityForm.inspectionInterval,
+      specifications: {
+        inspection: {
+          lastInspection: vehicleIdentityForm.lastApprovedInspection,
+          inspectionInterval: parseInt(
+            vehicleIdentityForm.inspectionInterval.split(" ")[0]
+          ),
+        },
       },
       inTraffic: vehicleIdentityForm.inTraffic,
       modelSpecification: {
         engine: {
-          size: vehicleTechnicalForm.engineSize,
+          size: parseInt(vehicleTechnicalForm.engineSize),
           model: vehicleTechnicalForm.engineType,
-          powerKW: vehicleTechnicalForm.power,
-          powerHP: vehicleTechnicalForm.power * 1.36,
+          powerKW: parseInt(vehicleTechnicalForm.power),
+          powerHP: parseInt(vehicleTechnicalForm.power) * 1.36,
+          fuelCapacity: parseInt(vehicleTechnicalForm.fuelCapacity),
+          fuelConsumption: vehicleTechnicalForm.fuelConsumption,
         },
         gearbox: {
           type: vehicleTechnicalForm.gearbox,
@@ -86,7 +127,7 @@ export default function AddVehicleScreen({ navigation, route }) {
       {formPart === 1 && (
         <VehicleIdentityForm
           navigate={navigation.navigate}
-          nextForm={() => setFormPart(formPart + 1)}
+          nextForm={() => setFormPart(2)}
           formState={vehicleIdentityForm}
           setFormState={setVehicleIdentityForm}
           handleSubmitForm={handleSubmitForm}

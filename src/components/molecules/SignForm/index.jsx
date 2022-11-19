@@ -41,7 +41,7 @@ const SignForm = ({ type, setType, navigation }) => {
     } else if (type === "login") {
       try {
         const res = await loginUser(username, password);
-        res.status === 200 && navigation.navigate("Home");
+        res?.status === 200 && navigation.navigate("Home");
       } catch (err) {
         console.log(err);
       }

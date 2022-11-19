@@ -91,8 +91,8 @@ const VehicleIdentityForm = ({
       name: "licensePlate",
     },
   ];
-
   const handleFormState = (value, name) => {
+    console.log(name, value);
     setFormState({
       ...formState,
       [name]: value,
@@ -125,18 +125,21 @@ const VehicleIdentityForm = ({
         required
       />
       {fields.map(
-        ({ label, placeholder, name, keyboardType, required }, index) => (
-          <InputField
-            key={index}
-            name={name}
-            label={label || ""}
-            placeholder={placeholder || ""}
-            value={formState[name]}
-            setValue={handleFormState}
-            keyboardType={keyboardType || "default"}
-            required={required}
-          />
-        )
+        ({ label, placeholder, name, keyboardType, required }, index) => {
+          console.log("VALUES", formState[name]);
+          return (
+            <InputField
+              key={index}
+              name={name}
+              label={label || ""}
+              placeholder={placeholder || ""}
+              value={formState[name]}
+              setValue={handleFormState}
+              keyboardType={keyboardType || "default"}
+              required={required}
+            />
+          );
+        }
       )}
       <ImageInput
         name="color"
@@ -207,7 +210,6 @@ const VehicleIdentityForm = ({
               nextForm();
             } else {
               setErrorMessage("Please fill in all required fields");
-              console.log(ErrorMessage);
             }
           }}
           my={5}

@@ -1,5 +1,5 @@
 import { View, Text, ScrollView } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import Heading from "../../atoms/Heading";
 import InputField from "../../atoms/InputField";
 import RegularText from "../../atoms/RegularText";
@@ -15,20 +15,11 @@ const VehicleTechnicalForm = ({
   data,
   language,
 }) => {
-  const [horsePower, setHorsePower] = React.useState(0);
-
+  const [horsePower, setHorsePower] = useState(0);
   const handleFormState = (value, name) => {
-    if (name === "gearbox") {
-      if (value === "Manuell") {
-        value = "manual";
-      } else if (value === "Automat") {
-        value = "automatic";
-      }
-    }
-
     setFormState({
       ...formState,
-      [name]: value?.toLowerCase(),
+      [name]: value,
     });
     if (name === "power") {
       setHorsePower(Math.floor(value * 1.35962));
