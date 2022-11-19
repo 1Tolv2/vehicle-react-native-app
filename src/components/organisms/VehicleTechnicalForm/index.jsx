@@ -13,13 +13,22 @@ const VehicleTechnicalForm = ({
   vehicleType,
   handleSubmitForm,
   data,
+  language,
 }) => {
   const [horsePower, setHorsePower] = React.useState(0);
 
   const handleFormState = (value, name) => {
+    if (name === "gearbox") {
+      if (value === "Manuell") {
+        value = "manual";
+      } else if (value === "Automat") {
+        value = "automatic";
+      }
+    }
+
     setFormState({
       ...formState,
-      [name]: value,
+      [name]: value?.toLowerCase(),
     });
     if (name === "power") {
       setHorsePower(Math.floor(value * 1.35962));
@@ -31,9 +40,9 @@ const VehicleTechnicalForm = ({
       style={{ backgroundColor: "white", padding: 10, width: "100%" }}
     >
       <Heading type="h1" color="orange">
-        Technical Details
+        {language === "sv" ? "Tekniska detaljer" : "Technical Details"}
       </Heading>
-      <Heading type="h2">Engine</Heading>
+      <Heading type="h2">{language === "sv" ? "Motor" : "Engine"}</Heading>
       <InputField
         name="engineSize"
         label="Size"
@@ -47,7 +56,7 @@ const VehicleTechnicalForm = ({
       />
       <InputField
         name="engineType"
-        label="Type"
+        label={language === "sv" ? "Modell" : "Type"}
         placeholder="Ex. B202, V8, Inline-4, etc."
         value={formState.engineType}
         setValue={handleFormState}
@@ -55,17 +64,19 @@ const VehicleTechnicalForm = ({
       />
       <InputField
         name="power"
-        label="Power"
+        label={language === "sv" ? "Effekt" : "Power"}
         placeholder="Ex. 81, 35, etc."
         value={formState.power}
         setValue={handleFormState}
         keyboardType="numeric"
         unit="kW"
       />
-      <RegularText>Horsepower: {horsePower}</RegularText>
+      <RegularText>
+        {language === "sv" ? "Hästkrafter" : "Horsepower:"} {horsePower}
+      </RegularText>
       <InputField
         name="mileage"
-        label="Mileage"
+        label={language === "sv" ? "Miltal" : "Mileage"}
         placeholder="Ex. 2400, 16000, 26000, etc."
         value={formState.mileage}
         setValue={handleFormState}
@@ -74,7 +85,7 @@ const VehicleTechnicalForm = ({
       />
       <InputField
         name="fuelCapacity"
-        label="Fuel Capacity"
+        label={language === "sv" ? "Bränslekapacitet" : "Fuel Capacity"}
         placeholder="Ex. 18, 35, etc."
         value={formState.fuelCapacity}
         setValue={handleFormState}
@@ -83,7 +94,7 @@ const VehicleTechnicalForm = ({
       />
       <InputField
         name="fuelConsumption"
-        label="Fuel Consumption"
+        label={language === "sv" ? "Bränslekonsumption" : "Fuel Consumption"}
         placeholder="Ex. 0.3, 0.6, 1 etc."
         value={formState.fuelConsumption}
         setValue={handleFormState}
@@ -101,14 +112,14 @@ const VehicleTechnicalForm = ({
         <RadioButton
           multiple
           name="gearbox"
-          label="Manual"
+          label={language === "sv" ? "Manuell" : "Manual"}
           setValue={handleFormState}
           value={formState.gearbox}
         />
         <RadioButton
           multiple
           name="gearbox"
-          label="Automatic"
+          label={language === "sv" ? "Automat" : "Automatic"}
           setValue={handleFormState}
           value={formState.gearbox}
         />

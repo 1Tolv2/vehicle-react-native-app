@@ -8,7 +8,6 @@ import MainButton from "../../atoms/MainButton";
 import RadioButton from "../../atoms/RadioButton";
 import LabelText from "../../atoms/LabelText";
 import ErrorText from "../../atoms/ErrorText";
-import { TabRouter } from "@react-navigation/native";
 
 const { colors } = theme;
 
@@ -18,6 +17,7 @@ const VehicleIdentityForm = ({
   formState,
   setFormState,
   data,
+  language,
 }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const colorOptions = [
@@ -64,29 +64,29 @@ const VehicleIdentityForm = ({
   ];
   const fields = [
     {
-      label: "Nickname",
+      label: language === "sv" ? "Smeknamn" : "Nickname",
       placeholder: "Ex. K.I.T.T., General Lee, etc.",
       name: "nickname",
     },
     {
-      label: "Brand",
+      label: language === "sv" ? "Märke" : "Brand",
       placeholder: "Ex. Volvo, Toyota, SAAB, etc.",
       name: "brand",
       required: true,
     },
     {
-      label: "Model",
+      label: language === "sv" ? "Modell" : "Model",
       placeholder: "Ex. V70, Corolla, 9000, etc.",
       name: "model",
     },
     {
-      label: "Year",
+      label: language === "sv" ? "Årtal" : "Year",
       placeholder: "Ex. 1998, 2001, 2003, etc.",
       name: "year",
       keyboardType: "numeric",
     },
     {
-      label: "License Plate",
+      label: language === "sv" ? "Registreringsnummer" : "License Plate",
       placeholder: "Ex. ABC-123, Ecto-1, etc.",
       name: "licensePlate",
     },
@@ -102,11 +102,11 @@ const VehicleIdentityForm = ({
   return (
     <ScrollView style={{ backgroundColor: "white", padding: 10 }}>
       <Heading type="h1" color="orange">
-        Vehicle identity
+        {language === "sv" ? "Fordonsidentitet" : "Vehicle identity"}
       </Heading>
       <ImageInput
         name="vehicleType"
-        title="Vehicle type"
+        title={language === "sv" ? "Fordonstyp" : "Vehicle type"}
         data={[
           {
             value: 2,

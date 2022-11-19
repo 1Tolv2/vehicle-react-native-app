@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
-import { createVehicle, updateVehicle } from "../utils/api";
+import { createVehicle, updateVehicle, getUser } from "../utils/api";
 import VehicleIdentityForm from "../components/organisms/VehicleIdentityForm";
 import VehicleTechnicalForm from "../components/organisms/VehicleTechnicalForm";
 
 export default function AddVehicleScreen({ navigation, route }) {
   const [formPart, setFormPart] = useState(1);
+  const [userSettings, setUserSettings] = useState(null);
   const [vehicleIdentityForm, setVehicleIdentityForm] = useState({
     vehicleType: 0,
     color: "",
@@ -34,6 +35,17 @@ export default function AddVehicleScreen({ navigation, route }) {
     }
   }, []);
 
+  useEffect(() => {
+    getUser()
+      .then((res) => {
+        if (res.data) {
+          console.log(res.data.user?.settings);
+          setUserSettings(res.data.user?.settings);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   const handleSubmitForm = async () => {
     const formData = {
       registrationNumber: vehicleIdentityForm.licensePlate,
@@ -60,6 +72,7 @@ export default function AddVehicleScreen({ navigation, route }) {
         },
       },
     };
+
     if (route.params?.data) {
       await updateVehicle(route.params?.data._id, formData);
       navigation.navigate("Home");
@@ -78,6 +91,7 @@ export default function AddVehicleScreen({ navigation, route }) {
           setFormState={setVehicleIdentityForm}
           handleSubmitForm={handleSubmitForm}
           data={route.params?.data}
+          language={userSettings?.language}
         />
       )}
       {formPart === 2 && (
@@ -87,6 +101,7 @@ export default function AddVehicleScreen({ navigation, route }) {
           setFormState={setVehicleTechnicalForm}
           handleSubmitForm={handleSubmitForm}
           data={route.params?.data}
+          language={userSettings?.language}
         />
       )}
     </View>
