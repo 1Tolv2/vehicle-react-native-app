@@ -24,21 +24,46 @@ const renderFormattedValue = (key, value, userUnits) => {
       return value;
   }
 };
-
+const translateToSwedish = (string) => {
+  switch (string) {
+    case "Size":
+      return "Slagvolym";
+    case "Type":
+      return "Typ";
+    case "Power":
+      return "Effekt";
+    case "Mileage":
+      return "Miltal";
+    case "Fuel Type":
+      return "Bränsle";
+    case "Fuel Capacity":
+      return "Bränslekapacitet";
+    case "Fuel Consumption":
+      return "Bränsleförbrukning";
+    case "Gearbox":
+      return "Växellåda";
+    default:
+      return string;
+  }
+};
 const upperCaseFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-const loopThroughObject = (object, array, userUnits) => {
+const loopThroughObject = (object, array, userUnits, language) => {
   Object.entries(object).map(([key, value]) => {
     if (typeof value === "object" && value !== null) {
-      loopThroughObject(value, array);
+      loopThroughObject(value, array, userUnits, language);
     } else {
       value
         ? array.push(
             <View style={styles.gridItem} key={key}>
               <Heading color="darkGrey">
-                {upperCaseFirstLetter(key).replace("-", " ")}
+                {language === "sv"
+                  ? translateToSwedish(
+                      upperCaseFirstLetter(key).replace("-", " ")
+                    )
+                  : upperCaseFirstLetter(key).replace("-", " ")}
               </Heading>
               <RegularText margin={5}>
                 {renderFormattedValue(key, value, userUnits) || "N/A"}
@@ -50,9 +75,9 @@ const loopThroughObject = (object, array, userUnits) => {
   });
 };
 
-const renderData = (technicalData, userUnits) => {
+const renderData = (technicalData, userUnits, language) => {
   const dataToRender = [];
-  loopThroughObject(technicalData, dataToRender, userUnits);
+  loopThroughObject(technicalData, dataToRender, userUnits, language);
   return dataToRender;
 };
 
@@ -77,6 +102,7 @@ const VehicleTechnicalData = ({ vehicle }) => {
     getUser()
       .then((res) => {
         if (res.data) {
+          console.log(res.data.user?.settings);
           setUserSettings(res.data.user?.settings);
         }
       })
@@ -85,12 +111,18 @@ const VehicleTechnicalData = ({ vehicle }) => {
   return (
     <View style={styles.container}>
       <Heading type="h3" color="orange">
-        Technical Data
+        {userSettings?.language === "sv" ? "Teknisk data" : "Technical Data"}
       </Heading>
-      <Heading type="h4">Engine</Heading>
+      <Heading type="h4">
+        {userSettings?.language === "sv" ? "Motor" : "Engine"}
+      </Heading>
       {userSettings && (
         <View style={styles.grid}>
-          {renderData(technicalData, userSettings?.units)}
+          {renderData(
+            technicalData,
+            userSettings?.units,
+            userSettings?.language
+          )}
         </View>
       )}
     </View>
