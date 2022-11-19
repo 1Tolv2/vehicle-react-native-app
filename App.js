@@ -5,6 +5,8 @@ import AddVehicleScreen from "./src/routes/AddVehicleScreen";
 import VehicleDetailScreen from "./src/routes/VehicleDetailScreen";
 import HomeScreen from "./src/routes/HomeScreen";
 import AppSettingsScreen from "./src/routes/AppSettingsScreen";
+import React from "react";
+import { StyleSheet } from "react-native";
 
 const Stack = createStackNavigator();
 
@@ -41,3 +43,21 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    position: "relative",
+    bottom: 250,
+    display: "flex",
+    zIndex: 5,
+  },
+  modalHeader: {
+    marginVertical: "50%",
+  },
+  activationButton: {
+    marginVertical: "50%",
+  },
+  checkBox: {
+    backgroundColor: "#fff",
+  },
+});
