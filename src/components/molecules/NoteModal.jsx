@@ -1,8 +1,9 @@
 import { View, TextInput, Modal, StyleSheet } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import theme from "../theme";
 import Heading from "../atoms/Heading";
 import MainButton from "../atoms/MainButton";
+import { getUser } from "../../utils/api";
 
 const { colors } = theme;
 
@@ -14,7 +15,15 @@ const NoteModal = ({
   deleteNote,
 }) => {
   const { note, setNote } = noteState;
+  const [userSettings, setUserSettings] = useState(null);
 
+  useEffect(() => {
+    getUser().then((res) => {
+      if (res.data?.user) {
+        setUserSettings(res.data.user);
+      }
+    });
+  });
   return (
     <Modal
       animationType="slide"
@@ -26,11 +35,21 @@ const NoteModal = ({
         <View style={styles.backdrop} />
         <View style={styles.modal}>
           <Heading type="h3">
-            {type.type === "edit" ? "Edit note" : "Add note"}
+            {userSettings?.language === "sv" ? (
+              <>
+                {type.type === "edit"
+                  ? "Redigera anteckning"
+                  : "Lägg till anteckning"}
+              </>
+            ) : (
+              <>{type.type === "edit" ? "Edit note" : "Add note"}</>
+            )}
           </Heading>
           <TextInput
             style={styles.input}
-            placeholder="Enter note"
+            placeholder={
+              userSettings?.language === "sv" ? "Skriv här..." : "Write here..."
+            }
             value={note}
             onChangeText={(e) => {
               setNote(e);
@@ -38,14 +57,26 @@ const NoteModal = ({
             multiline={true}
           />
           <MainButton
-            title={type.type === "edit" ? "Save note" : "Add note"}
+            title={
+              type.type === "edit" && userSettings?.language === "sv"
+                ? "Spara anteckning"
+                : type.type === "edit" && userSettings?.language === "en"
+                ? "Save note"
+                : userSettings?.language === "sv"
+                ? "Lägg till"
+                : "Add"
+            }
             bgColor="orange"
             event={() => handleOnSubmit(note)}
             my={5}
           />
           {type.type === "edit" && (
             <MainButton
-              title="Delete note"
+              title={
+                userSettings?.language === "sv"
+                  ? "Ta bort anteckning"
+                  : "Delete note"
+              }
               bgColor="cancel"
               event={deleteNote}
               my={5}
