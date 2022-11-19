@@ -55,6 +55,10 @@ export const getUser = async () => {
   return await axios.get("/users/me");
 };
 
+export const updateUser = async (settings) => {
+  return await axios.put("/users/me", settings);
+};
+
 export const getVehicles = async () => {
   try {
     return await axios.get("/vehicles");

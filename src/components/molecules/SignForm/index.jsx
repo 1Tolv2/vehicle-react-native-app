@@ -27,7 +27,10 @@ const SignForm = ({ type, setType, navigation }) => {
   const submitForm = async () => {
     if (type === "register") {
       try {
-        const res = await registerUser(username, password, { language, units });
+        const res = await registerUser(username, password, {
+          language,
+          units: units.toLowerCase(),
+        });
         if (res.status === 201) {
           setType("login");
           setConfirmPassword("");

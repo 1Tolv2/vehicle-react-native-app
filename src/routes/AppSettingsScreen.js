@@ -3,10 +3,11 @@ import { View, Text } from "react-native";
 import Heading from "../components/atoms/Heading";
 import LabelText from "../components/atoms/LabelText";
 import MainButton from "../components/atoms/MainButton";
-import { getUser } from "../utils/api";
+import { getUser, updateUser } from "../utils/api";
 import RadioButton from "../components/atoms/RadioButton";
 
 export default function AppSettingsScreen({ navigation }) {
+  const [currentLanguage, setCurrentLanguage] = useState("");
   const [userSettings, setUserSettings] = useState(null);
 
   const handleSettingsState = (value, name) => {
@@ -18,92 +19,106 @@ export default function AppSettingsScreen({ navigation }) {
     getUser().then((res) => {
       if (res.data.user.settings.language === "sv") {
         setUserSettings({
-          language:
-            res.data.user.settings.language === "sv" ? "Svenska" : "Engelska",
+          language: "Svenska",
           units:
             res.data.user.settings.units === "metric"
               ? "Metersystemet"
               : "Imperiala",
+          darkmode: res.data.user.settings.darkmode,
         });
+        setCurrentLanguage("sv");
       } else {
         setUserSettings({
-          language:
-            res.data.user.settings.language === "sv" ? "Swedish" : "English",
+          language: "English",
           units:
             res.data.user.settings.units === "metric" ? "Metric" : "Imperial",
+          darkmode: res.data.user.settings.darkmode,
         });
+        setCurrentLanguage("en");
       }
     });
   }, []);
+
+  const handleSubmitSettings = async () => {
+    await updateUser({
+      language:
+        userSettings.language === "Svenska" ||
+        userSettings.language === "Swedish"
+          ? "sv"
+          : "en",
+      units:
+        userSettings.units === "Metersystemet" ||
+        userSettings.units === "Metric"
+          ? "metric"
+          : "imperial",
+      darkmode: userSettings.darkmode ? true : false,
+    });
+    navigation.navigate("Home");
+  };
   return (
-    <View style={{ height: "100%", marginTop: 20, backgroundColor: "white" }}>
+    <View
+      style={{
+        height: "100%",
+        marginTop: 20,
+        padding: 10,
+        backgroundColor: "white",
+      }}
+    >
       <Text>App Settings Screen</Text>
       {userSettings && (
         <>
           <LabelText>
-            {userSettings?.language === "Svenska" ? "Enheter" : "Units"}
+            {currentLanguage === "sv" ? "Enheter" : "Units"}
           </LabelText>
           <View style={{ flexDirection: "row" }}>
             <RadioButton
               multiple
-              name="language"
-              label={
-                userSettings?.language === "Svenska"
-                  ? "Metersystemet"
-                  : "Metric"
-              }
+              name="units"
+              label={currentLanguage === "sv" ? "Metersystemet" : "Metric"}
               setValue={handleSettingsState}
-              value={userSettings?.language}
+              value={userSettings?.units}
             />
             <RadioButton
               multiple
-              name="language"
-              label={
-                userSettings?.language === "Svenska"
-                  ? "Imperialasystemet"
-                  : "Imperial"
-              }
+              name="units"
+              label={currentLanguage === "sv" ? "Imperiala" : "Imperial"}
               setValue={handleSettingsState}
-              value={userSettings?.language}
+              value={userSettings?.units}
             />
           </View>
           <LabelText>
-            {userSettings?.language === "Svenska" ? "Mörktläge" : "Dark mode"}
+            {currentLanguage === "sv" ? "Mörktläge" : "Dark mode"}
           </LabelText>
           <View style={{ flexDirection: "row" }}>
             <RadioButton
-              name="darkMode"
+              name="darkmode"
               label="On"
               setValue={handleSettingsState}
-              value={userSettings?.darkMode}
+              value={userSettings?.darkmode}
             />
           </View>
           <LabelText>
-            {userSettings?.language === "sv" ? "Språk" : "Language"}
+            {currentLanguage === "sv" ? "Språk" : "Language"}
           </LabelText>
           <View style={{ flexDirection: "row" }}>
             <RadioButton
               multiple
               name="language"
-              label={
-                userSettings?.language === "Svenska" ? "Svenska" : "Swedish"
-              }
+              label={currentLanguage === "sv" ? "Svenska" : "Swedish"}
               setValue={handleSettingsState}
               value={userSettings?.language}
             />
             <RadioButton
               multiple
               name="language"
-              label={
-                userSettings?.language === "Svenska" ? "Engelska" : "English"
-              }
+              label={currentLanguage === "sv" ? "Engelska" : "English"}
               setValue={handleSettingsState}
               value={userSettings?.language}
             />
           </View>
         </>
       )}
-      <MainButton title="Save" event={() => {}} bgColor="orange" />
+      <MainButton title="Save" event={handleSubmitSettings} bgColor="orange" />
     </View>
   );
 }
