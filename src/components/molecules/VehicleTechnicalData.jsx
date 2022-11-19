@@ -12,7 +12,7 @@ const renderFormattedValue = (key, value, userUnits) => {
     case "mileage":
       return `${value} ${userUnits === "imperial" ? "mi" : "mil"}`;
     case "size":
-      return `${value} ${value > 100 ? "cc" : "l"}`;
+      return `${value} ${value > 40 ? "cc" : "l"}`;
     case "fuel-consumption":
       return `${value} ${userUnits === "imperial" ? "MPG" : "l/100km"}`;
     case "fuel-capacity":
@@ -57,7 +57,7 @@ const renderData = (technicalData, userUnits) => {
 };
 
 const VehicleTechnicalData = ({ vehicle }) => {
-  const [userUnits, setUserUnits] = useState("metric");
+  const [userSettings, setUserSettings] = useState(null);
 
   const technicalData = {
     engine: {
@@ -76,7 +76,9 @@ const VehicleTechnicalData = ({ vehicle }) => {
   useEffect(() => {
     getUser()
       .then((res) => {
-        setUserUnits(res.data.user.settings.units);
+        if (res.data) {
+          setUserSettings(res.data.user?.settings);
+        }
       })
       .catch((err) => console.log(err));
   }, [vehicle]);
@@ -86,7 +88,11 @@ const VehicleTechnicalData = ({ vehicle }) => {
         Technical Data
       </Heading>
       <Heading type="h4">Engine</Heading>
-      <View style={styles.grid}>{renderData(technicalData, userUnits)}</View>
+      {userSettings && (
+        <View style={styles.grid}>
+          {renderData(technicalData, userSettings?.units)}
+        </View>
+      )}
     </View>
   );
 };
