@@ -7,10 +7,7 @@ import theme from "../theme";
 
 const { colors } = theme;
 
-const VehicleIdentityArea = ({ vehicle }) => {
-  const handleOnPress = () => {
-    console.log("Edit button pressed");
-  };
+const VehicleIdentityArea = ({ vehicle, navigate }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -23,7 +20,11 @@ const VehicleIdentityArea = ({ vehicle }) => {
         </Heading>
         <View style={styles.preamble}>
           <RegularText align="left">{vehicle.registrationNumber}</RegularText>
-          <IconButton icon="edit" size={60} event={() => handleOnPress} />
+          <IconButton
+            icon="edit"
+            size={60}
+            event={() => navigate("AddVehicle", { data: vehicle })}
+          />
         </View>
       </View>
       <Image

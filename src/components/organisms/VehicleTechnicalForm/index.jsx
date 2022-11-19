@@ -12,6 +12,7 @@ const VehicleTechnicalForm = ({
   formState,
   vehicleType,
   handleSubmitForm,
+  data,
 }) => {
   const [horsePower, setHorsePower] = React.useState(0);
 
@@ -113,7 +114,7 @@ const VehicleTechnicalForm = ({
         />
       </View>
       <MainButton
-        title="Add vehicle"
+        title={`${data ? "Save" : "Add"} vehicle`}
         bgColor="orange"
         event={handleSubmitForm}
       />

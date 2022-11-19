@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
-import { createVehicle } from "../utils/api";
+import { createVehicle, updateVehicle } from "../utils/api";
 import VehicleIdentityForm from "../components/organisms/VehicleIdentityForm";
 import VehicleTechnicalForm from "../components/organisms/VehicleTechnicalForm";
 
-export default function AddVehicleScreen({ navigation }) {
+export default function AddVehicleScreen({ navigation, route }) {
   const [formPart, setFormPart] = useState(1);
   const [vehicleIdentityForm, setVehicleIdentityForm] = useState({
     vehicleType: 0,
@@ -28,16 +28,20 @@ export default function AddVehicleScreen({ navigation }) {
     gearbox: "",
   });
 
-  const handleSubmitForm = () => {
-    if (vehicleIdentityForm.vehicleType || vehicleIdentityForm.brand) {
+  useEffect(() => {
+    if (route.params?.data) {
+      setVehicleIdentityForm(route.params.data);
     }
+  }, []);
+
+  const handleSubmitForm = async () => {
     const formData = {
       registrationNumber: vehicleIdentityForm.licensePlate,
       vehicleType: vehicleIdentityForm.vehicleType,
       brand: vehicleIdentityForm.brand,
       model: vehicleIdentityForm.model,
       modelYear: vehicleIdentityForm.year,
-      color: { primaryColor: vehicleIdentityForm.color },
+      color: vehicleIdentityForm.color,
       nickname: vehicleIdentityForm.nickname,
       inspection: {
         lastInspection: vehicleIdentityForm.lastApprovedInspection,
@@ -56,8 +60,13 @@ export default function AddVehicleScreen({ navigation }) {
         },
       },
     };
-
-    createVehicle(formData);
+    if (route.params?.data) {
+      await updateVehicle(route.params?.data._id, formData);
+      navigation.navigate("Home");
+    } else {
+      await createVehicle(formData);
+      navigation.navigate("Home");
+    }
   };
   return (
     <View style={{ marginTop: 20 }}>
@@ -68,6 +77,7 @@ export default function AddVehicleScreen({ navigation }) {
           formState={vehicleIdentityForm}
           setFormState={setVehicleIdentityForm}
           handleSubmitForm={handleSubmitForm}
+          data={route.params?.data}
         />
       )}
       {formPart === 2 && (
@@ -76,6 +86,7 @@ export default function AddVehicleScreen({ navigation }) {
           formState={vehicleTechnicalForm}
           setFormState={setVehicleTechnicalForm}
           handleSubmitForm={handleSubmitForm}
+          data={route.params?.data}
         />
       )}
     </View>

@@ -71,6 +71,10 @@ export const createVehicle = async (formData) => {
   }
 };
 
+export const updateVehicle = (id, formData) => {
+  return axios.put(`/vehicles/${id}`, formData);
+};
+
 export const createNote = async (note) => {
   return await axios.post(`/notes`, note);
 };

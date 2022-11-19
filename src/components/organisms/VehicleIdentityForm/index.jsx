@@ -8,6 +8,7 @@ import MainButton from "../../atoms/MainButton";
 import RadioButton from "../../atoms/RadioButton";
 import LabelText from "../../atoms/LabelText";
 import ErrorText from "../../atoms/ErrorText";
+import { TabRouter } from "@react-navigation/native";
 
 const { colors } = theme;
 
@@ -16,6 +17,7 @@ const VehicleIdentityForm = ({
   handleSubmitForm,
   formState,
   setFormState,
+  data,
 }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const colorOptions = [
@@ -198,7 +200,7 @@ const VehicleIdentityForm = ({
       <View style={{ marginVertical: 30 }}>
         {errorMessage.length > 0 && <ErrorText>{errorMessage}</ErrorText>}
         <MainButton
-          title="Add technical specifications"
+          title={`${data ? "Edit" : "Add"} technical specifications`}
           bgColor="orange"
           event={() => {
             if (formState.vehicleType && formState.brand) {
@@ -210,12 +212,14 @@ const VehicleIdentityForm = ({
           }}
           my={5}
         />
-        <MainButton
-          title="Add more information later"
-          bgColor="lightGrey"
-          event={handleSubmitForm}
-          my={5}
-        />
+        {!data && (
+          <MainButton
+            title="Add more information later"
+            bgColor="lightGrey"
+            event={handleSubmitForm}
+            my={5}
+          />
+        )}
       </View>
     </ScrollView>
   );

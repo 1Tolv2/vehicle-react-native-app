@@ -24,7 +24,6 @@ const formatDate = (date) => {
 const VehicleNotesList = ({ vehicle }) => {
   const [notes, setNotes] = useState([]);
   const [note, setNote] = useState("");
-
   const [updateList, setUpdateList] = useState(false);
   const [typeOfNoteModal, setTypeOfNoteModal] = useState(null);
 
@@ -41,7 +40,6 @@ const VehicleNotesList = ({ vehicle }) => {
   }, [updateList]);
 
   const submitNote = async (note) => {
-    console.log(note, vehicle._id, typeOfNoteModal);
     if (typeOfNoteModal.type === "add") {
       await createNote({ vehicleId: vehicle._id, text: note });
     } else if (typeOfNoteModal.type === "edit") {
@@ -71,7 +69,6 @@ const VehicleNotesList = ({ vehicle }) => {
         Notes
       </Heading>
       {notes.map((noteItem) => {
-        console.log(noteItem);
         return (
           <Pressable
             key={noteItem._id}

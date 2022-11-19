@@ -8,7 +8,10 @@ import VehicleTechnicalData from "../components/molecules/VehicleTechnicalData";
 export default function VehicleDetailScreen({ route, navigation }) {
   return (
     <ScrollView>
-      <VehicleIdentityArea vehicle={route.params.data} />
+      <VehicleIdentityArea
+        vehicle={route.params.data}
+        navigate={navigation.navigate}
+      />
       <VehicleTechnicalData vehicle={route.params.data} />
       <VehicleInspectionData vehicle={route.params.data} />
       <VehicleNotesList vehicle={route.params.data} />

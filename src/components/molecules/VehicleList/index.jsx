@@ -27,7 +27,7 @@ const vehicleReducer = (state, action) => {
   }
 };
 
-const VehicleList = ({ toggleModal, navigation }) => {
+const VehicleList = ({ toggleModal, navigation, isFocused }) => {
   const [vehicleData, dispatch] = useReducer(vehicleReducer, []);
   const [updateList, setUpdateList] = useState(false);
   const [activeSort, setActiveSort] = useState("");
@@ -60,7 +60,7 @@ const VehicleList = ({ toggleModal, navigation }) => {
 
   useEffect(() => {
     getVehicleData();
-  }, []);
+  }, [isFocused]);
 
   return (
     <View style={styles().container}>
