@@ -7,7 +7,7 @@ import theme from "../theme";
 
 const { colors } = theme;
 
-const VehicleIdentityArea = ({ vehicle, navigate }) => {
+const VehicleIdentityArea = ({ vehicle, navigate, userSettings }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -43,7 +43,8 @@ const VehicleIdentityArea = ({ vehicle, navigate }) => {
           }`}</Heading>
         )}
         <RegularText>
-          In traffic: {vehicle.inTraffic ? <>&#9989;</> : <>&#10060;</>}
+          {userSettings?.language === "sv" ? "I trafik: " : "In traffic: "}
+          {vehicle.inTraffic ? <>&#9989;</> : <>&#10060;</>}
         </RegularText>
       </View>
     </View>

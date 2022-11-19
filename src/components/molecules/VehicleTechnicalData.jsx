@@ -29,7 +29,7 @@ const translateToSwedish = (string) => {
     case "Size":
       return "Slagvolym";
     case "Type":
-      return "Typ";
+      return "Modell";
     case "Power":
       return "Effekt";
     case "Mileage":
@@ -81,9 +81,7 @@ const renderData = (technicalData, userUnits, language) => {
   return dataToRender;
 };
 
-const VehicleTechnicalData = ({ vehicle }) => {
-  const [userSettings, setUserSettings] = useState(null);
-
+const VehicleTechnicalData = ({ vehicle, userSettings, setUserSettings }) => {
   const technicalData = {
     engine: {
       size: vehicle.modelSpecification?.engine?.size,
@@ -98,16 +96,6 @@ const VehicleTechnicalData = ({ vehicle }) => {
     },
     gearbox: vehicle.modelSpecification?.gearBox?.type,
   };
-  useEffect(() => {
-    getUser()
-      .then((res) => {
-        if (res.data) {
-          console.log(res.data.user?.settings);
-          setUserSettings(res.data.user?.settings);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, [vehicle]);
   return (
     <View style={styles.container}>
       <Heading type="h3" color="orange">

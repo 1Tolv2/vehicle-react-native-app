@@ -16,22 +16,31 @@ const formatDate = (date) => {
     day < 10 ? "0" + day : day
   }`;
 };
-const VehicleInspectionData = ({ vehicle }) => {
+
+const VehicleInspectionData = ({ vehicle, userSettings }) => {
   const lastInspection = new Date(
     vehicle?.specifications?.inspection?.lastInspection
   );
   return (
     <View style={styles.container}>
       <Heading type="h3" color="orange">
-        Inspection
+        {userSettings?.language === "sv" ? "Besktining" : "Inspection"}
       </Heading>
       <View style={styles.grid}>
         <View style={styles.gridItem}>
-          <Heading color="darkGrey">Last approved:</Heading>
+          <Heading color="darkGrey">
+            {userSettings?.language === "sv"
+              ? "Senast godkänd"
+              : "Last approved"}
+          </Heading>
           <RegularText margin={5}>{formatDate(lastInspection)}</RegularText>
         </View>
         <View style={styles.gridItem}>
-          <Heading color="darkGrey">Inspect before:</Heading>
+          <Heading color="darkGrey">
+            {userSettings?.language === "sv"
+              ? "Besiktiga innan"
+              : "Inspection before"}
+          </Heading>
           <RegularText margin={5}>
             {formatDate(
               lastInspection.setMonth(lastInspection.getMonth() + 14)

@@ -21,7 +21,7 @@ const formatDate = (date) => {
   }`;
 };
 
-const VehicleNotesList = ({ vehicle }) => {
+const VehicleNotesList = ({ vehicle, userSettings }) => {
   const [notes, setNotes] = useState([]);
   const [note, setNote] = useState("");
   const [updateList, setUpdateList] = useState(false);
@@ -66,7 +66,7 @@ const VehicleNotesList = ({ vehicle }) => {
         />
       </View>
       <Heading type="h3" color="orange">
-        Notes
+        {userSettings?.language === "sv" ? "Anteckningar" : "Notes"}
       </Heading>
       {notes.map((noteItem) => {
         return (
