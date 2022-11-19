@@ -1,4 +1,4 @@
-import { View, StyleSheet, Pressable, Modal, Dimensions } from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import Heading from "../atoms/Heading";
 import theme from "../theme";
@@ -125,34 +125,6 @@ const styles = StyleSheet.create({
   addButton: {
     position: "absolute",
     right: 10,
-  },
-  wrapper: {
-    position: "absolute",
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    zIndex: 1,
-  },
-  backdrop: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    height: "100%",
-    width: "100%",
-    backgroundColor: colors.black,
-    opacity: 0.5,
-  },
-  modal: {
-    height: 400,
-    width: "90%",
-    padding: 20,
-    backgroundColor: colors.white,
-    borderRadius: 5,
-    elevation: 10,
   },
 });
 
