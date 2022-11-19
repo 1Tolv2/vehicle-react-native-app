@@ -6,6 +6,7 @@ export const styles = (active) =>
   StyleSheet.create({
     container: {
       elevation: 1,
+      marginTop: 15,
     },
     list: {
       //   height: "100%",

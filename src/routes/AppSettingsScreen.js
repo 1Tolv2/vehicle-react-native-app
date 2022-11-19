@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
-import Heading from "../components/atoms/Heading";
 import LabelText from "../components/atoms/LabelText";
 import MainButton from "../components/atoms/MainButton";
 import { getUser, updateUser } from "../utils/api";
@@ -11,7 +10,6 @@ export default function AppSettingsScreen({ navigation }) {
   const [userSettings, setUserSettings] = useState(null);
 
   const handleSettingsState = (value, name) => {
-    console.log(value, name);
     setUserSettings({ ...userSettings, [name]: value });
   };
 

@@ -18,7 +18,7 @@ const vehicleReducer = (state, action) => {
   }
 };
 
-const VehicleList = ({ toggleModal, navigation, isFocused }) => {
+const VehicleList = ({ toggleModal, navigation, isFocused, userSettings }) => {
   const [vehicleData, dispatch] = useReducer(vehicleReducer, []);
   const [updateList, setUpdateList] = useState(false);
   const [activeSort, setActiveSort] = useState("");
@@ -55,7 +55,9 @@ const VehicleList = ({ toggleModal, navigation, isFocused }) => {
 
   return (
     <View style={styles().container}>
-      <RegularText size={24}>Your Vehicles</RegularText>
+      <RegularText size={24}>
+        {userSettings?.language === "sv" ? "Dina fordon" : "Your Vehicles"}
+      </RegularText>
       <View style={styles().filterContainer}>
         <Pressable
           onPress={() => sortBy("modelYear")}
