@@ -1,7 +1,12 @@
-import { View, StyleSheet } from "react-native";
-import React from "react";
+import { View, StyleSheet, Pressable, Modal, Dimensions } from "react-native";
+import React, { useEffect, useState } from "react";
 import Heading from "../atoms/Heading";
 import theme from "../theme";
+import { createNote, getVehicleNotes, updateNote } from "../../utils/api";
+import RegularText from "../atoms/RegularText";
+import IconButton from "./IconButton";
+import { deleteNote } from "../../utils/api";
+import NoteModal from "./NoteModal";
 
 const { colors } = theme;
 
@@ -16,18 +21,87 @@ const formatDate = (date) => {
   }`;
 };
 
-const VehicleNotesList = () => {
+const VehicleNotesList = ({ vehicle }) => {
+  const [notes, setNotes] = useState([]);
+  const [note, setNote] = useState("");
+
+  const [updateList, setUpdateList] = useState(false);
+  const [typeOfNoteModal, setTypeOfNoteModal] = useState(null);
+
+  useEffect(() => {
+    try {
+      getVehicleNotes(vehicle._id).then((res) => {
+        if (res.data) {
+          setNotes(res.data.notes);
+        }
+      });
+    } catch (err) {
+      console.log("handling", err.message);
+    }
+  }, [updateList]);
+
+  const submitNote = async (note) => {
+    console.log(note, vehicle._id, typeOfNoteModal);
+    if (typeOfNoteModal.type === "add") {
+      await createNote({ vehicleId: vehicle._id, text: note });
+    } else if (typeOfNoteModal.type === "edit") {
+      await updateNote(typeOfNoteModal.id, { text: note });
+    }
+    setTypeOfNoteModal(null);
+    setNote("");
+    setUpdateList(!updateList);
+  };
+
+  const handleDeleteNote = async (id) => {
+    await deleteNote(id);
+    setUpdateList(!updateList);
+    setNote("");
+    setTypeOfNoteModal(null);
+  };
+
   return (
     <View style={styles.container}>
+      <View style={styles.addButton}>
+        <IconButton
+          icon="add"
+          event={() => setTypeOfNoteModal({ type: "add" })}
+        />
+      </View>
       <Heading type="h3" color="orange">
         Notes
       </Heading>
+      {notes.map((noteItem) => {
+        console.log(noteItem);
+        return (
+          <Pressable
+            key={noteItem._id}
+            style={styles.listItem}
+            onLongPress={() => {
+              setNote(noteItem.text);
+              setTypeOfNoteModal({ type: "edit", id: noteItem._id });
+            }}
+          >
+            <Heading>{formatDate(noteItem.createdAt)}</Heading>
+            <RegularText>{noteItem.text}</RegularText>
+          </Pressable>
+        );
+      })}
+      {typeOfNoteModal && (
+        <NoteModal
+          type={typeOfNoteModal}
+          setState={setTypeOfNoteModal}
+          handleOnSubmit={submitNote}
+          noteState={{ note, setNote }}
+          deleteNote={() => handleDeleteNote(typeOfNoteModal.id)}
+        />
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    position: "relative",
     width: "100%",
     height: "auto",
     backgroundColor: colors.white,
@@ -38,6 +112,47 @@ const styles = StyleSheet.create({
   },
   header: {
     marginTop: 20,
+  },
+  list: {
+    margin: 10,
+    width: "100%",
+  },
+  listItem: {
+    borderBottomColor: colors.darkGrey,
+    borderBottomWidth: 1,
+    marginBottom: 10,
+  },
+  addButton: {
+    position: "absolute",
+    right: 10,
+  },
+  wrapper: {
+    position: "absolute",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    zIndex: 1,
+  },
+  backdrop: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    height: "100%",
+    width: "100%",
+    backgroundColor: colors.black,
+    opacity: 0.5,
+  },
+  modal: {
+    height: 400,
+    width: "90%",
+    padding: 20,
+    backgroundColor: colors.white,
+    borderRadius: 5,
+    elevation: 10,
   },
 });
 

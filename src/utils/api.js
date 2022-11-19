@@ -70,3 +70,19 @@ export const createVehicle = async (formData) => {
     console.log("createVehicle", err.message);
   }
 };
+
+export const createNote = async (note) => {
+  return await axios.post(`/notes`, note);
+};
+
+export const getVehicleNotes = async (id) => {
+  return await axios.get(`/notes/vehicle/${id}`);
+};
+
+export const updateNote = async (id, note) => {
+  return await axios.put(`/notes/${id}`, note);
+};
+
+export const deleteNote = async (id) => {
+  return await axios.delete(`/notes/${id}`);
+};

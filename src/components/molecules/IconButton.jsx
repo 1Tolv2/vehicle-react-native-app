@@ -15,7 +15,7 @@ const renderIcon = (icon) => {
 
 const IconButton = ({ icon, size, event }) => {
   return (
-    <Pressable style={styles({ size: size || 50 }).container} event={event}>
+    <Pressable style={styles({ size: size || 50 }).container} onPress={event}>
       {renderIcon(icon)}
     </Pressable>
   );
@@ -32,6 +32,7 @@ const styles = ({ size }) =>
       borderRadius: size,
       paddingHorizontal: 5,
       paddingVertical: 5,
+      zIndex: 1,
     },
     image: {
       position: "absolute",
