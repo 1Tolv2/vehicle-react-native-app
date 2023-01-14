@@ -1,29 +1,14 @@
 import React from "react";
 import { View, Pressable, Image, StyleSheet } from "react-native";
 import theme from "../../theme";
-import { schedulePushNotification } from "../../organisms/Notification";
-import * as Notifications from "expo-notifications";
 
 const { colors } = theme;
 
 const TabMenu = ({ navigate }) => {
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldSetBadge: true,
-    }),
-  });
-  const activateNotifications = async () => {
-    console.log("ACTIVATED");
-    await schedulePushNotification();
-  };
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
-        <Pressable
-          style={styles.iconContainer}
-          onPress={() => activateNotifications()}
-        >
+        <Pressable style={styles.iconContainer}>
           <Image
             style={styles.image}
             source={require("../../../../assets/icons/motorcycle_filled.png")}
@@ -95,18 +80,5 @@ const styles = StyleSheet.create({
     height: 32,
   },
 });
-
-// const IconContainer = styled.View`
-//   padding: 3px;
-//   border-bottom-width: 2px;
-//   border-bottom-color: transparent;
-
-//   ${(props) =>
-//     props.active &&
-//     css`
-//       border-bottom-width: 2px;
-//       border-bottom-color: orange;
-//     `}
-// `;
 
 export default TabMenu;
