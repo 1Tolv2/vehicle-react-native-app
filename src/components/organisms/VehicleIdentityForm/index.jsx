@@ -92,7 +92,6 @@ const VehicleIdentityForm = ({
     },
   ];
   const handleFormState = (value, name) => {
-    console.log(name, value);
     setFormState({
       ...formState,
       [name]: value,
@@ -126,7 +125,6 @@ const VehicleIdentityForm = ({
       />
       {fields.map(
         ({ label, placeholder, name, keyboardType, required }, index) => {
-          console.log("VALUES", formState[name]);
           return (
             <InputField
               key={index}
