@@ -13,16 +13,12 @@ const TabMenu = ({ navigate }) => {
       shouldSetBadge: true,
     }),
   });
-  const activateNotifications = async () => {
-    console.log("ACTIVATED");
-    await schedulePushNotification();
-  };
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
         <Pressable
           style={styles.iconContainer}
-          onPress={() => activateNotifications()}
+          onPress={async () => await schedulePushNotification()}
         >
           <Image
             style={styles.image}

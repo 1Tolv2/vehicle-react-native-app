@@ -7,10 +7,20 @@ import HomeScreen from "./src/routes/HomeScreen";
 import AppSettingsScreen from "./src/routes/AppSettingsScreen";
 import React from "react";
 import { StyleSheet } from "react-native";
+import * as Notifications from "expo-notifications";
+import { schedulePushNotification } from "./src/components/organisms/Notification";
 
 const Stack = createStackNavigator();
 
 export default function App() {
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldSetBadge: true,
+    }),
+  });
+  schedulePushNotification();
+
   return (
     <NavigationContainer>
       <Stack.Navigator>

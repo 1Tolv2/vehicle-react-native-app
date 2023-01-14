@@ -45,23 +45,48 @@ export async function schedulePushNotification() {
   const time = new Date();
   const day = time.getDate();
   const month = time.getMonth() + 1;
-  const year = time.getFullYear();
-  console.log("SCHEDULED");
-  if (day === 1 && month === 12) {
+  const trigger = {
+    hour: 10,
+    minute: 0,
+    repeats: true,
+  };
+  if (day === 20 && month === 11) {
+    const id = await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Winter is coming",
+        body: `Don't forget to put on your winter tires by 1 decemeber.`,
+      },
+      trigger,
+    });
+    console.log("notif id on scheduling: ", id);
+  } else if (day === 1 && month === 12) {
     const id = await Notifications.scheduleNotificationAsync({
       content: {
         title: "Winter is coming",
         body: `It is time to put winter tires on!`,
       },
-      trigger: {
-        weekday: 1,
-        hour: 10,
-        minute: 0,
-        repeats: true,
-      },
+      trigger,
     });
     console.log("notif id on scheduling: ", id);
     return id;
+  } else if (day === 31 && month === 3) {
+    const id = await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Winter is over",
+        body: `Don't forget to put on summer tires by 15 april.`,
+      },
+      trigger,
+    });
+    console.log("notif id on scheduling: ", id);
+  } else if (day === 20 && month === 11) {
+    const id = await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Winter is over",
+        body: `You need to remove your winter tires today if you haven't already.`,
+      },
+      trigger,
+    });
+    console.log("notif id on scheduling: ", id);
   }
 }
 
