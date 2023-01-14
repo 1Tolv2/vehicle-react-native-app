@@ -10,8 +10,7 @@ const getToken = async () => {
   }
 };
 
-axios.defaults.baseURL = "http://192.168.1.170:8800/api/v1";
-console.log(axios.defaults.baseURL);
+axios.defaults.baseURL = API_URL;
 axios.interceptors.request.use(async (config) => {
   if (!config?.headers) {
     config.headers = {};
