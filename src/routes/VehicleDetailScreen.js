@@ -12,7 +12,6 @@ export default function VehicleDetailScreen({ route, navigation }) {
     getUser()
       .then((res) => {
         if (res.data) {
-          console.log(res.data.user?.settings);
           setUserSettings(res.data.user?.settings);
         }
       })

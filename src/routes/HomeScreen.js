@@ -22,7 +22,6 @@ export default function HomeScreen({ navigation }) {
     getUser()
       .then((res) => {
         if (res.data) {
-          console.log(res.data.user?.settings);
           setUserSettings(res.data.user?.settings);
         }
       })
